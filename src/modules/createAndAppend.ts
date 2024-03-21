@@ -7,3 +7,5 @@ export function createAndAppend(parent: HTMLDivElement, elementName: string, tex
 
     return element;
 };
+
+
