@@ -1,0 +1,59 @@
+{
+    "AllUsers": {
+        "userImage": "string",
+        "username": "string",
+        "password": "string"
+    },
+    "Profile": {
+        "userImage": "string",
+        "username": "string",
+        "comments": []
+    },
+    "forum1": [
+        {
+            "posts": {
+                "firebaseID1": {
+                    "userID": "string",
+                    "postTitle": "string",
+                    "postContent": "string"
+                },
+                "firebaseID2": {
+                    "userID": "string",
+                    "postTitle": "string",
+                    "postContent": "string"
+                }
+            },
+            "comments": {
+                "userID": "string",
+                "commentContent": "string"
+            }
+        }
+    ],
+    "forum2": [
+        {
+            "posts": {
+                "userID": "string",
+                "postTitle": "string",
+                "postContent": "string"
+            },
+            "comments": {
+                "userID": "string",
+                "commentContent": "string"
+            }
+        }
+    ],
+    "forum3": [
+        {
+            "category": "string",
+            "posts": {
+                "userID": "string",
+                "postTitle": "string",
+                "postContent": "string"
+            },
+            "comments": {
+                "userID": "string",
+                "commentContent": "string"
+            }
+        }
+    ]
+}
