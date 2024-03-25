@@ -1,0 +1,84 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#mainContent {
+    margin-left: 200px;
+    padding: 20px;
+  }
+
+#postsList {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  #postsList img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  #userID {
+    margin: 0;
+  }
+
+  #postText {
+    margin-top: 10px;
+  }
+
+  #comment {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  #comment:hover {
+    background-color: #0056b3;
+  }
+
+  #sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: #007bff;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    transition: left 0.3s ease;
+    padding: 20px;
+  }
+  #postForm {
+    margin-bottom: 20px;
+  }
+  
+  #postForm input,
+  #postForm textarea,
+  #postForm button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%; /* Gör formulärets element fullbredd */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #postForm button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #postForm button:hover {
+    background-color: #0056b3;
+  }
+  
