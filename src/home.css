@@ -63,6 +63,10 @@
 
 /*********************************************/
 
+#login-signup {
+    display: none;
+}
+
 #login-signup #login-signup-main {
     display: flex;
     justify-content: center;
@@ -87,7 +91,15 @@
     margin-bottom: 100px;
 }
 
-#login-signup-form {
+#login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#signup-form {
     display: flex;
     justify-content: center;
     align-items: center;
