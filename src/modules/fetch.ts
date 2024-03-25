@@ -59,6 +59,20 @@ async function deleteAccount(userId: string) {
     console.log(info)
 }
 
+async function getCommentsInProfile(userId: string) {
+    // const url = baseUrl + `AllUsers/${userId}/comments.json`;
+    const url = baseUrl + `AllUsers/-NtVjmivseXUbEYBwlrL/comments.json`;
+    const options = {
+        method: 'GET',
+        headers: header
+    }
+
+    const response = await fetch(url, options);
+    const info = await response.json();
+    console.log(info)
+    return info;
+}
+
 
 
 // async function patch(patchData: any) {
@@ -76,4 +90,4 @@ async function deleteAccount(userId: string) {
 //     return info;
 // }
 
-export { get, post, deletePost, deleteAccount }
+export { get, post, deletePost, deleteAccount, getCommentsInProfile }

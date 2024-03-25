@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    align-items: center;
+    height: 7rem;
+    width: 100%;
+    background-color: black;
+}
+
+.profilePicture {
+    height: 4rem;
+    width: 4rem;
+    margin-left: 2rem;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.profileSection>div {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: lightblue;
+}

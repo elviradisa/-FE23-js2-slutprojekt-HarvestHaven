@@ -1,8 +1,12 @@
-import { get, post, deletePost, deleteAccount } from "./modules/fetch";
+import { get, post, deletePost, deleteAccount, getCommentsInProfile } from "./modules/fetch.ts";
+import { displayCommentsInProfile } from "./modules/profileView.ts";
+import { Comment } from "./modules/profileView.ts"
 
-let id = "-NtVxFvOx6o2YLvnX84x"
-console.log(id)
 
-get();
-// post('hej');
-deletePost(id, "forum1");
+let userId = 'id för varje användare'
+
+getCommentsInProfile(userId).then(displayCommentsInProfile)
+
+// getComments().then( (data)=>{
+//     displayComments(data, '13213')
+// } )
