@@ -9,7 +9,7 @@
         "username": "string",
         "comments": []
     },
-    "forum1": [
+    "forum1": 
         {
             "posts": {
                 "firebaseID1": {
@@ -28,7 +28,7 @@
                 "commentContent": "string"
             }
         }
-    ],
+    ,
     "forum2": [
         {
             "posts": {

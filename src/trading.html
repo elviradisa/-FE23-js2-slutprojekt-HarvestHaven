@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./modules/forum.ts" type="module"></script>
+    <link rel="stylesheet" href="./forum.css" />
+    <title>Forum 1</title>
+  </head>
+  <body>
+    <div id="sidebar">
+      <div id="ProfileSection"><!-- Bildikon för den valda profilbilden -->
+      <img id="profileImage" src="./media/images.jpg" alt="Profilbild">
+      <!-- <img id="profileImage" src="path/to/selected_profile_image.jpg" alt="Profilbild"> -->
+      <!-- Namn -->
+      <p>Namn: Jesper</p>
+    
+      <!-- Knapp för att besöka profilen -->
+      <button id="visitProfileBtn">Besök profil</button>
+    
+  </div>
+      <!-- Användarlistan här -->
+      <div id="userList">
+        <!-- Användare visas här -->
+      </div>
+      <!-- Plats för flera funktioner/knappar här -->
+    </div>
+    <div id="mainContent">
+      <div>
+        <h1>HARVEST HAVEN</h1>
+      </div>
+      <div id="postForm">
+        <h2>Skapa ett inlägg</h2>
+        <form id="postForm">
+          <input type="text" id="postTitle" placeholder="Titel" required>
+          <textarea id="postContent" placeholder="Innehåll" required></textarea>
+          <button type="submit">Skicka</button>
+      </form>
+    </div>
+      <div id="postsList"></div>
+    </div>
+  </body>
+</html>
