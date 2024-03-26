@@ -1,5 +1,14 @@
 import { post } from "./fetch.ts";
 
+ // Hämta knappen för att besöka profilen
+const visitProfileBtn = document.getElementById('visitProfileBtn') as HTMLButtonElement;
+
+// Lägg till händelselyssnare för klickhändelse på knappen
+visitProfileBtn.addEventListener('click', () => {
+  // Ersätt "profile.html" med sökvägen till sidan som representerar profilen
+  window.location.href = "http://localhost:1234/index.html";
+});
+
 // Funktion för att skapa ett inlägg
 async function createPost(event: Event): Promise<void> {
   event.preventDefault();
@@ -79,6 +88,16 @@ const postForm = document.getElementById("postForm");
 if (postForm) {
   postForm.addEventListener("submit", createPost);
 }
+
+// Funktion för att kommentera på ett inlägg
+// function commentOnPost(postTitle: string): void {
+//   const comment = prompt('Skriv din kommentar:');
+//   if (comment) {
+//       // Lägg till kommentaren i JSON-data eller skicka till Firebase beroende på implementation
+//       alert(`Kommentar på inlägg "${postTitle}": ${comment}`);
+//   }
+// }
+
 
 // Funktion för att hämta inlägg från Firebase
 async function getPosts(): Promise<any> {
