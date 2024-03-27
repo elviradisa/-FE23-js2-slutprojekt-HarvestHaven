@@ -19,11 +19,6 @@ loginButton.addEventListener('click', () => {
     loginSignupPage.style.display = 'block';
     loginForm.style.display = 'flex';
     homePage.style.display = 'none';
-
-    const loginButton = document.createElement('p');
-    loginButton.classList.add('loginPElement');
-    loginButton.textContent = 'Login';
-    loginForm.prepend(loginButton);
     console.log('login page');
 })
 
@@ -31,11 +26,6 @@ signupButton.addEventListener('click', () => {
     loginSignupPage.style.display = 'block';
     signupForm.style.display = 'flex';
     homePage.style.display = 'none';
-
-    const signupButton = document.createElement('p');
-    signupButton.classList.add('signupPElement');
-    signupButton.textContent = 'Sign Up';
-    signupForm.prepend(signupButton);
     console.log('signup page');
 })
 
