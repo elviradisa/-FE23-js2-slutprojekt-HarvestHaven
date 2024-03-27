@@ -21,7 +21,7 @@ loginButton.addEventListener('click', () => {
     homePage.style.display = 'none';
 
     const loginButton = document.createElement('p');
-    loginButton.classList.add('loginButton');
+    loginButton.classList.add('loginPElement');
     loginButton.textContent = 'Login';
     loginForm.prepend(loginButton);
     console.log('login page');
@@ -33,7 +33,7 @@ signupButton.addEventListener('click', () => {
     homePage.style.display = 'none';
 
     const signupButton = document.createElement('p');
-    signupButton.classList.add('signupButton');
+    signupButton.classList.add('signupPElement');
     signupButton.textContent = 'Sign Up';
     signupForm.prepend(signupButton);
     console.log('signup page');
