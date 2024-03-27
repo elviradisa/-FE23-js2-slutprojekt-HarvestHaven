@@ -6,7 +6,7 @@ const header = {
 
 
 async function get() {
-    const URL = baseUrl + '.json';
+    const URL = baseUrl + 'AllUsers/.json';
 
     const options = {
         method: 'GET',

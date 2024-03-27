@@ -92,7 +92,7 @@
 }
 
 #login-form {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -100,9 +100,66 @@
 }
 
 #signup-form {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 20px;
 }
+
+.login-button, .signup-button {
+    padding: 10px;
+}
+
+.login-button:hover {
+    background-color: rgb(115, 168, 115);
+}
+
+.signup-button:hover {
+    background-color: rgb(115, 168, 115);
+}
+
+.profile-images {
+    display: flex;
+    gap: 10px;
+}
+
+.chick-profile {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    border-radius: 50%;
+    background-image: url("../media/img/chick.jpeg");
+}
+
+.chick-profile:hover {
+    border: 3px solid rgb(115, 168, 115);
+    box-sizing: border-box;
+}
+
+.cow-profile {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    border-radius: 50%;
+    background-image: url("../media/img/cow.jpeg");
+}
+
+.cow-profile:hover {
+    border: 3px solid rgb(115, 168, 115);
+    box-sizing: border-box;
+}
+
+.pig-profile {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    border-radius: 50%;
+    background-image: url("../media/img/pig.jpeg");
+}
+
+.pig-profile:hover {
+    border: 3px solid rgb(115, 168, 115);
+    box-sizing: border-box;
+}
+
