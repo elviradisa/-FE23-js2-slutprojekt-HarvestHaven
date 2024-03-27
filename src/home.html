@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script  type="module" src="./modules/home.ts"></script>
-    <link rel="stylesheet" href="home.css">
+    <script type="module" src="./modules/home.ts"></script>
+    <link rel="stylesheet" href="./css/home.css">
     <title>Home Page</title>
 </head>
 <body>
@@ -34,13 +34,23 @@
         <main id="login-signup-main">
             <div class="login-signup-container">
                 <div class="login-signup-div">
-                    <p class="login-button">Login</p>
-                    <p class="signup-button">Sign Up</p>
+                    <!-- <p class="login-button">Login</p>
+                    <p class="signup-button">Sign Up</p> -->
                 </div>
                 <form id="login-form">
                     <input type="text" name="username" id="username-form" placeholder="Username...">
                     <input type="text" name="password" id="password-form" placeholder="Password...">
-                    <button type="submit" id="login-button">Go!</button>
+                    <button type="submit" id="login-go-button">Go!</button>
+                </form>
+                <form id="signup-form">
+                    <div class="profile-images">
+                        <div class="chick-profile"></div>
+                        <div class="cow-profile"></div>
+                        <div class="pig-profile"></div>
+                    </div>
+                    <input type="text" name="username" id="username-form" placeholder="Username...">
+                    <input type="text" name="password" id="password-form" placeholder="Password...">
+                    <button type="submit" id="signup-go-button">Go!</button>
                 </form>
             </div>
         </main>
