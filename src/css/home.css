@@ -71,7 +71,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 #login-signup-header {
@@ -107,16 +107,8 @@
     gap: 20px;
 }
 
-.login-button, .signup-button {
-    padding: 10px;
-}
-
-.login-button:hover {
-    background-color: rgb(115, 168, 115);
-}
-
-.signup-button:hover {
-    background-color: rgb(115, 168, 115);
+.loginPElement, .signupPElement {
+    
 }
 
 .profile-images {
