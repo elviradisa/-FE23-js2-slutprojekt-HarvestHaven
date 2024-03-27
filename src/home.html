@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="./modules/home.ts"></script>
     <script type="module" src="./modules/loginSignup.ts"></script>
+    <script type="module" src="./modules/SignUp.ts"></script>
+
     <link rel="stylesheet" href="./css/home.css">
     <title>Home Page</title>
 </head>
+
 <body>
     <div id="home">
         <header id="home-header">
@@ -24,7 +28,7 @@
             <p class="home-bottom-quote">HayDay Fans Cultivate Connections</p>
             <form id="home-signup-form">
                 <input type="text" name="signup" id="home-signup-input" placeholder="Enter username here...">
-                <button class="home-signup-form-button" >Get Started</button>
+                <button class="home-signup-form-button">Get Started</button>
             </form>
         </main>
     </div>
@@ -47,12 +51,13 @@
                         <div class="cow-profile"></div>
                         <div class="pig-profile"></div>
                     </div>
-                    <input type="text" name="username" id="username-form" placeholder="Username...">
-                    <input type="text" name="password" id="password-form" placeholder="Password...">
+                    <input type="text" name="username" id="createUsername-form" placeholder="Username...">
+                    <input type="text" name="password" id="createPassword-form" placeholder="Password...">
                     <button type="submit" id="signup-go-button">Go!</button>
                 </form>
             </div>
         </main>
     </div>
 </body>
+
 </html>

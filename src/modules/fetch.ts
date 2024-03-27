@@ -19,6 +19,22 @@ async function get() {
     return info;
 }
 
+async function postNewUser(newUser: any) {
+    const url = baseUrl + 'AllUsers/.json';
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(newUser),
+        headers: header
+    }
+
+    const response = await fetch(url, options);
+    const info = await response.json();
+    console.log(info);
+    return info;
+
+}
+
 async function post(postData: any) {
     const URL = baseUrl + 'forum1/0/posts.json';
 
@@ -90,4 +106,4 @@ async function getCommentsInProfile(userId: string) {
 //     return info;
 // }
 
-export { get, post, deletePost, deleteAccount, getCommentsInProfile }
+export { get, postNewUser, post, deletePost, deleteAccount, getCommentsInProfile }
