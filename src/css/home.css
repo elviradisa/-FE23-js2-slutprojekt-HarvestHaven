@@ -61,7 +61,7 @@
     padding: 10px;
 }
 
-/*********************************************/
+/********************** Login Signup ***********************/
 
 #login-signup {
     display: none;
@@ -88,7 +88,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 70px;
 }
 
 #login-form {
@@ -108,17 +108,29 @@
 }
 
 .loginPElement, .signupPElement {
-    
+    margin-bottom: 60px;
+    font-size: 20px;
+}
+
+#username-form, #password-form {
+    font-size: 15px;
+    padding: 5px;
+    width: 250px;
+}
+
+#login-go-button, #signup-go-button {
+    padding: 5px 10px 5px 10px;
+
 }
 
 .profile-images {
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 
 .chick-profile {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     background-size: contain;
     border-radius: 50%;
     background-image: url("../media/img/chick.jpeg");
@@ -130,8 +142,8 @@
 }
 
 .cow-profile {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     background-size: contain;
     border-radius: 50%;
     background-image: url("../media/img/cow.jpeg");
@@ -143,8 +155,8 @@
 }
 
 .pig-profile {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     background-size: contain;
     border-radius: 50%;
     background-image: url("../media/img/pig.jpeg");
