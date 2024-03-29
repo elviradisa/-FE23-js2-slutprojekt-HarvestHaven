@@ -28,3 +28,17 @@ loginFormEvent.addEventListener('submit', async (event) => {
         console.log('Login failed');
     }
 })
+
+// async function getUsers() {
+//     const URL =  baseUrl + 'AllUsers/.json'
+
+//     const options = {
+//         method: 'GET',
+//         headers: header
+//     }
+
+//     const response = await fetch(URL, options);
+//     const data = await response.json();   
+//     console.log(data);
+//     return data;
+// }

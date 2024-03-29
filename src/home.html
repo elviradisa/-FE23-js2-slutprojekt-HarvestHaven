@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="./modules/home.ts"></script>
-    <script type="module" src="./modules/loginSignup.ts"></script>
+
     <script type="module" src="./modules/newAccount.ts"></script>
+    <script type="module" src="./modules/login.ts"></script>
 
     <link rel="stylesheet" href="./css/home.css">
     <title>Home Page</title>
@@ -41,11 +42,13 @@
                 <div class="login-signup-div">
                 </div>
                 <form id="login-form">
+                    <p class="loginPElement">Login</p>
                     <input type="text" name="username" id="username-form" placeholder="Username...">
                     <input type="text" name="password" id="password-form" placeholder="Password...">
                     <button type="submit" id="login-go-button">Go!</button>
                 </form>
                 <form id="signup-form">
+                    <p class="signupPElement">Sign Up</p>
                     <div class="profile-images">
                         <div class="chick-profile"></div>
                         <div class="cow-profile"></div>
