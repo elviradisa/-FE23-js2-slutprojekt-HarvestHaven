@@ -13,20 +13,28 @@ signUpForm.addEventListener('submit', async (event) => {
     const cowImg = document.querySelector('.cow-profile') as HTMLDivElement;
     const pigImg = document.querySelector('.pig-profile') as HTMLDivElement;
 
-    const userInput = document.querySelector('#username-form') as HTMLInputElement;
-    const passwordInput = document.querySelector('#password-form') as HTMLInputElement;
+    const userInput = document.querySelector('#createUsername-form') as HTMLInputElement;
+    const passwordInput = document.querySelector('#createPassword-form') as HTMLInputElement;
 
     const userInputValue = userInput.value;
-    console.log(userInput)
+    console.log(userInputValue)
     const passwordInputValue = passwordInput.value;
     console.log(passwordInputValue)
 
-    let SignUpSuccessful = false;
-    // const createNewUser = await postNewUser();
+    const newUser: NewUser = {
+        username: userInputValue,
+        password: passwordInputValue,
+        userImage: chickenImg || cowImg || pigImg
+    }
 
+    let SignUpSuccessful = false;
+    const createNewUser = await postNewUser(newUser);
+    console.log(newUser)
+    window.location.href = "http://localhost:1234/trading.html";
+
+    signUpForm.reset();
 });
 
 async function createNewUser(newUser: NewUser) {
     console.log('hej')
 }
-

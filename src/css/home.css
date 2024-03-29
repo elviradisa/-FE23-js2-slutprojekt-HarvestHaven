@@ -107,9 +107,8 @@
     gap: 20px;
 }
 
-.loginPElement, .signupPElement {
-    
-}
+.loginPElement,
+.signupPElement {}
 
 .profile-images {
     display: flex;
@@ -154,4 +153,3 @@
     border: 3px solid rgb(115, 168, 115);
     box-sizing: border-box;
 }
-
