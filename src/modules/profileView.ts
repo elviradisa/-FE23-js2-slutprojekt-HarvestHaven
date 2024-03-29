@@ -7,12 +7,13 @@ type Comment = {
 
 }
 
+
 function displayCommentsInProfile(comments: Comment) {
     for (const commentId in comments) {
         const comment = comments[commentId];
         createCommentsInProfile(comment, commentId)
 
-        // console.log(comments[commentId])
+        console.log(comments)
     }
 }
 
@@ -23,16 +24,21 @@ function createCommentsInProfile(comment: string, commentId: string) {
     eachCommentCard.id = commentId
     // console.log(eachCommentCard.id)
 
-
     const latestComments = createAndAppend(eachCommentCard, 'p', comment)
-
-    // console.log(commentSection)
-    // console.log(latestComments)
-    // console.log(eachCommentCard)
-
-
-    // console.log(user)
 }
+
+// function getUserInfo(userId: string) {
+//     // get()
+//     const username = document.querySelector('.username') as HTMLParagraphElement;
+//     username.innerText = userId
+//     let id = userId
+//     console.log(id);
+// }
+
+// function displayUsername(username: Comment) {
+
+
+// }
 
 
 

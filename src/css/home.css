@@ -143,6 +143,7 @@
 .chick-profile:hover {
     border: 3px solid rgb(115, 168, 115);
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .cow-profile {
@@ -156,6 +157,7 @@
 .cow-profile:hover {
     border: 3px solid rgb(115, 168, 115);
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .pig-profile {
@@ -169,4 +171,5 @@
 .pig-profile:hover {
     border: 3px solid rgb(115, 168, 115);
     box-sizing: border-box;
+    cursor: pointer;
 }
