@@ -1,4 +1,4 @@
-import { postNewUser } from "./fetch.ts";
+import { postNewUser } from "./fetch";
 
 type NewUser = {
     username: string,

@@ -6,7 +6,7 @@ const header = {
 
 
 async function get() {
-    const URL = baseUrl + 'AllUsers/.json';
+    const URL = baseUrl + '.json';
 
     const options = {
         method: 'GET',
@@ -17,6 +17,20 @@ async function get() {
     const info = await response.json();
     console.log(info)
     return info;
+}
+
+async function getLoginUser() {
+    const URL =  baseUrl + 'AllUsers/.json'
+
+    const options = {
+        method: 'GET',
+        headers: header
+    }
+
+    const response = await fetch(URL, options);
+    const data = await response.json();   
+    console.log(data);
+    return data;
 }
 
 async function postNewUser(newUser: any) {
@@ -106,4 +120,4 @@ async function getCommentsInProfile(userId: string) {
 //     return info;
 // }
 
-export { get, postNewUser, post, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getLoginUser, postNewUser, post, deletePost, deleteAccount, getCommentsInProfile }

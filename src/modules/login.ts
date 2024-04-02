@@ -1,24 +1,39 @@
-import { get } from "./fetch";
+import { getLoginUser } from "./fetch";
 
-const loginFormEvent = document.querySelector('#login-form') as HTMLElement;
+type LoginUser = {
+    username: string,
+    password: string
+}
+
+const loginFormEvent = document.querySelector('#login-form') as HTMLFormElement;
 loginFormEvent.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const userInput = document.querySelector('#username-form') as HTMLInputElement;
     const passwordInput = document.querySelector('#password-form') as HTMLInputElement;
+
     const userValue = userInput.value;
     const passwordValue = passwordInput.value;
     console.log(userValue);
     console.log(passwordValue);
 
-    let loginSuccessful = false;
-    const users = await get();
-    console.log(users);
+    const loginUser: LoginUser = {
+        username: userValue,
+        password: passwordValue
+    }
 
-    for (const userId in users.AllUsers) {
-        const user = users.AllUsers[userId];
-        if (user.username === userValue && user.password === passwordValue) {
-            loginSuccessful = true;
+    console.log(loginUser);
+
+    let loginSuccessful = false;
+    const users = await getLoginUser();
+
+    if (users) {
+        for (let userId in users) {
+            const user = users[userId];
+            if (user.username === userValue && user.password === passwordValue) {
+                loginSuccessful = true;
+                break;
+            }
         }
     }
 
@@ -27,18 +42,5 @@ loginFormEvent.addEventListener('submit', async (event) => {
     } else {
         console.log('Login failed');
     }
+    loginFormEvent.reset();
 })
-
-// async function getUsers() {
-//     const URL =  baseUrl + 'AllUsers/.json'
-
-//     const options = {
-//         method: 'GET',
-//         headers: header
-//     }
-
-//     const response = await fetch(URL, options);
-//     const data = await response.json();   
-//     console.log(data);
-//     return data;
-// }
