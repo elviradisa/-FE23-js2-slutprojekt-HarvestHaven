@@ -53,8 +53,8 @@ async function updatePostList(): Promise<void> {
     if (postsList) {
       postsList.innerHTML = ""; // Rensa tidigare inlägg
 
-      for (const postId in posts.forum1[0].posts) {
-        const post = posts.forum1[0].posts[postId];
+      for (const postId in posts.forum3[0].posts) {
+        const post = posts.forum3[0].posts[postId];
 
         if (post) {
           const postElement = document.createElement("div");
@@ -174,7 +174,6 @@ if (userDropdown) {
 
 // Anropa funktionen för att fylla dropdown-listan när sidan laddas
 window.onload = fillUserDropdown;
-
 
 // Uppdatera inläggslistan vid sidans laddning
 window.onload = updatePostList;
