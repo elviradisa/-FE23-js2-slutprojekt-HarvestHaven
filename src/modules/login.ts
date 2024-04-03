@@ -1,6 +1,8 @@
 import { getLoginUser } from "./fetch";
 
+
 type LoginUser = {
+    firebaseID?: string,
     username: string,
     password: string
 }
@@ -32,6 +34,11 @@ loginFormEvent.addEventListener('submit', async (event) => {
             const user = users[userId];
             if (user.username === userValue && user.password === passwordValue) {
                 loginSuccessful = true;
+                console.log(user)
+                // const usernameInHeader = document.querySelector('.username') as HTMLElement;
+                // usernameInHeader.innerHTML = user.username;
+                // console.log(usernameInHeader)
+                window.location.href = `http://localhost:1234/forum.html`;
                 break;
             }
         }
@@ -39,6 +46,7 @@ loginFormEvent.addEventListener('submit', async (event) => {
 
     if (loginSuccessful) {
         console.log('Successful login!');
+
     } else {
         console.log('Login failed');
     }

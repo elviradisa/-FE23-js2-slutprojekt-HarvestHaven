@@ -67,7 +67,7 @@ signUpForm.addEventListener('submit', async (event) => {
     let SignUpSuccessful = false;
     const createNewUser = await postNewUser(newUser);
     console.log(newUser)
-    window.location.href = "http://localhost:1234/trading.html";
+    window.location.href = "http://localhost:1234/home.html";
 
     signUpForm.reset();
 });
