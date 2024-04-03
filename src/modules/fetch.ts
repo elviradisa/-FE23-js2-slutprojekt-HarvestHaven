@@ -20,7 +20,7 @@ async function get() {
 }
 
 async function getLoginUser() {
-    const URL =  baseUrl + 'AllUsers/.json'
+    const URL = baseUrl + 'AllUsers/.json'
 
     const options = {
         method: 'GET',
@@ -28,9 +28,14 @@ async function getLoginUser() {
     }
 
     const response = await fetch(URL, options);
-    const data = await response.json();   
+    const data = await response.json();
     console.log(data);
     return data;
+}
+
+async function getYourUser(userId: string) {
+    const url = baseUrl + `AllUsers/${userId}/.json`
+
 }
 
 async function postNewUser(newUser: any) {
