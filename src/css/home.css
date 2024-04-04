@@ -94,7 +94,7 @@ a:active {
 .login-signup-container {
     background-color: rgb(243, 243, 243);
     padding: 100px;
-    height: 400px;
+    height: 500px;
 }
 
 .login-signup-div {
@@ -121,6 +121,9 @@ a:active {
     gap: 20px;
 }
 
+.signupPElement {
+    display: none;
+}
 
 .loginPElement,
 .signupPElement {
@@ -186,4 +189,26 @@ a:active {
     border: 3px solid rgb(115, 168, 115);
     box-sizing: border-box;
     cursor: pointer;
+}
+
+/********************** Signup Image ***********************/
+
+.selected-profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-size: contain;
+    display: none;
+}
+
+.selected-chick {
+    background-image: url('../media/img/chick.jpeg');
+}
+
+.selected-cow {
+    background-image: url('../media/img/cow.jpeg');
+}
+
+.selected-pig {
+    background-image: url('../media/img/pig.jpeg');
 }

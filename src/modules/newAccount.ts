@@ -3,16 +3,18 @@ import { postNewUser } from "./fetch";
 type NewUser = {
     username: string,
     password: string,
-    // userImage: string
-    userImage: HTMLElement
+    userImage: string
 }
+
+let profileImage = ''; //global variabel för att spara bilden
+
 const chooseProfilePicture = document.querySelector('.profile-images') as HTMLElement;
+const signupPElement = document.querySelector('.signupPElement') as HTMLParagraphElement;
 const chickenImg = document.querySelector('.chick-profile') as HTMLDivElement;
 const cowImg = document.querySelector('.cow-profile') as HTMLDivElement;
 const pigImg = document.querySelector('.pig-profile') as HTMLDivElement;
 
 chooseProfilePicture.addEventListener('click', (event) => {
-
     if (event.target == chickenImg) {
         chickenImg.style.border = '3px solid rgb(115, 168, 115)';
         chickenImg.style.boxSizing = 'border-box';
@@ -22,31 +24,21 @@ chooseProfilePicture.addEventListener('click', (event) => {
     } else if (event.target == cowImg) {
         cowImg.style.border = '3px solid rgb(115, 168, 115)';
         cowImg.style.boxSizing = 'border-box';
-
         pigImg.style.border = 'none';
         chickenImg.style.border = 'none';
-
         console.log('cow')
-        // newUser.userImage = cowImg;
-    } else {
-        console.log('pig');
+    } else if (event.target === pigImg) {
         pigImg.style.border = '3px solid rgb(115, 168, 115)';
         pigImg.style.boxSizing = 'border-box';
-
         cowImg.style.border = 'none';
         chickenImg.style.border = 'none';
+        console.log('pig');
     }
-    // newUser.userImage = pigImg;
-    return event.target;
 })
 
 const signUpForm = document.querySelector('#signup-form') as HTMLFormElement;
 signUpForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    // const chooseProfilePicture = document.querySelector('.profile-images') as HTMLDivElement;
-    // const chickenImg = document.querySelector('.chick-profile') as HTMLElement;
-    // const cowImg = document.querySelector('.cow-profile') as HTMLDivElement;
-    // const pigImg = document.querySelector('.pig-profile') as HTMLDivElement;
 
     const userInput = document.querySelector('#createUsername-form') as HTMLInputElement;
     const passwordInput = document.querySelector('#createPassword-form') as HTMLInputElement;
@@ -59,7 +51,7 @@ signUpForm.addEventListener('submit', async (event) => {
     const newUser: NewUser = {
         username: userInputValue,
         password: passwordInputValue,
-        userImage: chickenImg || cowImg || pigImg
+        userImage: profileImage
     }
 
     console.log(newUser)
@@ -72,28 +64,30 @@ signUpForm.addEventListener('submit', async (event) => {
     signUpForm.reset();
 });
 
-// const chickenImg = document.querySelector('.chick-profile') as HTMLElement;
+const displayChickenImage = document.querySelector('.selected-chick') as HTMLElement;
+const displayCowImage = document.querySelector('.selected-cow') as HTMLElement;
+const displayPigImage = document.querySelector('.selected-pig') as HTMLElement;
 
-// chickenImg.addEventListener('click', () => {
+chickenImg.addEventListener('click', () => {
+    displayChickenImage.style.display = 'block';
+    displayCowImage.style.display = 'none';
+    displayPigImage.style.display = 'none';
+    signupPElement.style.display = 'none';
+    profileImage = 'chicken'; //sparar värdet i globala variabeln när man trycker på en bild
+})
 
-//     console.log('chicken')
-//     // newUser.userImage = chickenImg;
-// })
+cowImg.addEventListener('click', () => {
+    displayCowImage.style.display = 'block';
+    displayPigImage.style.display = 'none';
+    displayChickenImage.style.display = 'none';
+    signupPElement.style.display = 'none';
+    profileImage = 'cow';
+})
 
-
-// cowImg.addEventListener('click', () => {
-//     console.log('cow')
-//     cowImg.style.border = "3px solid rgb(115, 168, 115)";
-
-
-//     // newUser.userImage = cowImg;
-// })
-
-// pigImg.addEventListener('click', () => {
-//     console.log('pig')
-//     // newUser.userImage = pigImg;
-// })
-
-async function chooseProfileImg(target) {
-
-}
+pigImg.addEventListener('click', () => {
+    displayPigImage.style.display = 'block';
+    displayCowImage.style.display = 'none';
+    displayChickenImage.style.display = 'none';
+    signupPElement.style.display = 'none';
+    profileImage = 'pig';
+})
