@@ -1,4 +1,4 @@
-import { get, post, deletePost, deleteAccount, getCommentsInProfile } from "./modules/fetch.ts";
+import { get, postForum1, postForum2, postForum3, deletePost, deleteAccount, getCommentsInProfile } from "./modules/fetch.ts";
 import { displayCommentsInProfile } from "./modules/profileView.ts";
 import { Comment } from "./modules/profileView.ts"
 
