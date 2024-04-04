@@ -1,4 +1,4 @@
-import { get, getCommentsInProfile } from "./fetch.ts";
+import { get, getCommentsInProfile, getYourUser } from "./fetch.ts";
 import { createAndAppend } from "./createAndAppend.ts";
 
 type Comment = {
@@ -6,6 +6,17 @@ type Comment = {
     userId: string
 
 }
+
+const loggedInUserID = localStorage.getItem('userId');
+console.log(loggedInUserID)
+
+getYourUser(loggedInUserID).then(data => {
+    const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
+    const usernameInBody = document.querySelector('.myAccountUsername') as HTMLParagraphElement;
+    usernameInHeader.textContent = data.username;
+    usernameInHeader.textContent = data.username;
+    console.log(data.username)
+});
 
 
 function displayCommentsInProfile(comments: Comment) {

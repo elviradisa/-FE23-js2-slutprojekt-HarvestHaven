@@ -45,7 +45,6 @@ async function getYourUser(userID: any,) {
     const data = await response.json();
     console.log(data);
     return data;
-
 }
 
 async function postNewUser(newUser: any) {
