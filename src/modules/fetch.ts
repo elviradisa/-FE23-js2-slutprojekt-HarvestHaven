@@ -184,4 +184,4 @@ async function getCommentsInProfile(userId: string) {
 //     return info;
 // }
 
-export { get, getLoginUser, postNewUser, allUsers, postForum1, postForum2, postForum3, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, deletePost, deleteAccount, getCommentsInProfile }
