@@ -4,31 +4,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="./modules/forum.ts" type="module"></script>
+  <script src="./modules/help.ts" type="module"></script>
   <link rel="stylesheet" href="./css/forum.css" />
-  <title>Forum 1</title>
+  <title>Forum: Help</title>
 </head>
 
 <body>
   <nav class="top-nav">
     <div id="titleH">
-      <h1>HARVEST HAVEN</h1>
-      <a href="trading.html" class="selected">TRADING</a>
-      <a href="forum.html">HELP</a>
-      <a href="forum3.html">CHALLENGES</a>
+      <div><a href="home.html"><h1>HARVEST HAVEN</h1></a></div>
+      <a href="shop.html">ROAD SHOP</a>
+      <a href="help.html" class="selected">HELP</a>
+      <a href="challenges.html">CHALLENGES</a>
+      <a href="profileView.html">PROFILE</a>
     </div>
+    
     <div class="profile-info">
       <!-- Namn -->
-      <p class="username">Namn: Jesper</p>
+      <p class="myAccountUsername"></p>
       <!-- Bildikon för den valda profilbilden -->
-      <a href="profileView.html">
-        <img id="profileImage" src="./media/img/cow.jpeg" alt="Profilbild">
+      <a class="chosenProfilePicture">
+        <img id="profilePicture" src="./media/img/cow.jpeg" alt="Profilbild">
       </a>
     </div>
     <!-- Plats för flera funktioner/knappar här -->
   </nav>
   <div id="userDropdownContainer">
-    <label for="userDropdown">Select User:</label>
+    <label for="userDropdown">Visit User:</label>
     <select id="userDropdown">
       <!-- Options will be dynamically populated by TypeScript -->
     </select>

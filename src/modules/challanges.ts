@@ -31,8 +31,7 @@ async function fillUserDropdown(): Promise<void> {
 // Funktion för att navigera till användarens profil
 function navigateToUserProfile(userId: string): void {
   // Konstruera URL:en till användarens profil baserat på userId 
-  // -- profileView.html
-  const userProfileUrl = `http://localhost:1234/userprofile.html?userId=${userId}`;
+  const userProfileUrl = `http://localhost:1234/visitUserProfile.html?userId=${userId}`;
   // Navigera till den angivna URL:en
   window.location.href = userProfileUrl;
 }
