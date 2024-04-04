@@ -3,15 +3,22 @@ import { getLoginUser } from "./fetch.ts";
 import { getYourUser } from "./fetch.ts";
 
 
-let userID: any;
-let users: any;
+// let userID: any;
+// let users: any;
 const loggedInUserID = localStorage.getItem('userId');
+const loggedInUserProfileImage = localStorage.getItem('profileImage')
+console.log(loggedInUserProfileImage)
 console.log(loggedInUserID)
 
 getYourUser(loggedInUserID).then(data => {
   const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
   usernameInHeader.textContent = data.username;
+
+  const profileImage = document.getElementById('profileImage') as HTMLImageElement;
+  console.log(profileImage.src = `${loggedInUserProfileImage}`);
+
 });
+
 
 
 // Funktion för att fylla dropdown-listan med användarnamn

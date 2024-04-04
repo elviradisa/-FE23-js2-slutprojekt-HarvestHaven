@@ -56,11 +56,13 @@ signUpForm.addEventListener('submit', async (event) => {
         userImage: profileImage
     }
 
+
     console.log(newUser)
 
     let signUpSuccessful = false;
     const createNewUser = await postNewUser(newUser);
-    console.log(newUser)
+    console.log(newUser.userImage)
+    localStorage.setItem('profileImage', profileImage)
     window.location.href = "http://localhost:1234/home.html";
 
 
