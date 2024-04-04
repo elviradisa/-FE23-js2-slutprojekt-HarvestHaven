@@ -28,21 +28,7 @@ async function getLoginUser() {
     }
 
     const response = await fetch(URL, options);
-    const data = await response.json();
-    console.log(data);
-    return data;
-}
-
-async function getYourUser(userID: any,) {
-    const url = baseUrl + `AllUsers/${userID}/.json`
-
-    const options = {
-        method: 'GET',
-        headers: header
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
+    const data = await response.json();   
     console.log(data);
     return data;
 }
@@ -183,4 +169,4 @@ async function getCommentsInProfile(userId: string) {
 //     return info;
 // }
 
-export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getLoginUser, postNewUser, allUsers, postForum1, postForum2, postForum3, deletePost, deleteAccount, getCommentsInProfile }
