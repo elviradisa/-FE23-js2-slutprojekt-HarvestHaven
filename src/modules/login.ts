@@ -1,4 +1,4 @@
-import { getLoginUser } from "./fetch";
+import { getLoginUser, getYourUser } from "./fetch";
 
 
 type LoginUser = {
@@ -35,10 +35,8 @@ loginFormEvent.addEventListener('submit', async (event) => {
             if (user.username === userValue && user.password === passwordValue) {
                 loginSuccessful = true;
                 console.log(user)
-                // const usernameInHeader = document.querySelector('.username') as HTMLElement;
-                // usernameInHeader.innerHTML = user.username;
-                // console.log(usernameInHeader)
-                window.location.href = `http://localhost:1234/forum.html`;
+                localStorage.setItem('userId', userId);
+
                 break;
             }
         }
@@ -46,6 +44,9 @@ loginFormEvent.addEventListener('submit', async (event) => {
 
     if (loginSuccessful) {
         console.log('Successful login!');
+        window.location.href = `http://localhost:1234/trading.html`;
+
+
 
     } else {
         console.log('Login failed');

@@ -33,8 +33,18 @@ async function getLoginUser() {
     return data;
 }
 
-async function getYourUser(userId: string) {
-    const url = baseUrl + `AllUsers/${userId}/.json`
+async function getYourUser(userID: any,) {
+    const url = baseUrl + `AllUsers/${userID}/.json`
+
+    const options = {
+        method: 'GET',
+        headers: header
+    }
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+    console.log(data);
+    return data;
 
 }
 
@@ -125,4 +135,4 @@ async function getCommentsInProfile(userId: string) {
 //     return info;
 // }
 
-export { get, getLoginUser, postNewUser, post, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getLoginUser, getYourUser, postNewUser, post, deletePost, deleteAccount, getCommentsInProfile }
