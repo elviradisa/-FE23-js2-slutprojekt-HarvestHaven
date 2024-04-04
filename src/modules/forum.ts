@@ -1,4 +1,54 @@
-import { post } from "./fetch.ts";
+import { postForum1 , allUsers } from "./fetch.ts";
+
+// Funktion för att fylla dropdown-listan med användarnamn
+async function fillUserDropdown(): Promise<void> {
+    try {
+        console.log("Filling user dropdown..."); // Kontrollmeddelande för att se om funktionen körs
+
+        const users = await allUsers(); // Hämta användaruppgifter från Firebase
+        console.log("Users from Firebase:", users); // Kontrollera om data hämtas korrekt
+
+        const userDropdown = document.getElementById("userDropdown") as HTMLSelectElement;
+
+        if (userDropdown) {
+            userDropdown.innerHTML = ""; // Rensa dropdown-listan innan fyllning
+
+            for (const userId in users) {
+                const username = users[userId].username;
+                const option = document.createElement("option");
+                option.value = userId;
+                option.textContent = username;
+                userDropdown.appendChild(option);
+            }
+        }
+
+        console.log("User dropdown filled successfully.");
+    } catch (error) {
+        console.error("Error filling user dropdown:", error);
+    }
+}
+
+// Funktion för att navigera till användarens profil
+function navigateToUserProfile(userId: string): void {
+  // Konstruera URL:en till användarens profil baserat på userId 
+  // -- profileView.html
+  const userProfileUrl = `http://localhost:1234/userprofile.html?userId=${userId}`;
+  // Navigera till den angivna URL:en
+  window.location.href = userProfileUrl;
+}
+// Lägg till händelselyssnare för att navigera till användarens profil vid val i dropdown-listan
+const userDropdown = document.getElementById("userDropdown");
+if (userDropdown) {
+  userDropdown.addEventListener("change", (event) => {
+    const selectedUserId = (event.target as HTMLSelectElement).value;
+    if (selectedUserId) {
+      navigateToUserProfile(selectedUserId);
+    }
+  });
+}
+
+// Anropa funktionen för att fylla dropdown-listan när sidan laddas
+fillUserDropdown();
 
 // skapa ett inlägg
 async function createPost(event: Event): Promise<void> {
@@ -10,7 +60,7 @@ async function createPost(event: Event): Promise<void> {
   if (postTitle && postContent) {
     try {
       // Skicka det nya inlägget till Firebase
-      await post({ postTitle, postContent });
+      await postForum1({ postTitle, postContent });
       // Återställ formuläret
       (document.getElementById("postTitle") as HTMLInputElement).value = "";
       (document.getElementById("postContent") as HTMLTextAreaElement).value = "";
@@ -121,60 +171,6 @@ async function getPosts(): Promise<any> {
   const data = await response.json();
   return data;
 }
-
-// Hämta användarinformation från databasen
-async function getUsers(): Promise<any> {
-  const response = await fetch(
-    "https://slutprojekt-js2-socialmedia-default-rtdb.europe-west1.firebasedatabase.app/AllUsers.json"
-  );
-  const userData = await response.json();
-  return userData;
-}
-
-// Funktion för att fylla dropdown-listan med användarnamn
-async function fillUserDropdown(): Promise<void> {
-  try {
-    const usersData = await getUsers();
-    const userDropdown = document.getElementById("userDropdown");
-
-    if (userDropdown) {
-      userDropdown.innerHTML = ""; // Rensa dropdown-listan innan fyllning
-
-      for (const userId in usersData) {
-        const username = usersData[userId].username;
-        const option = document.createElement("option");
-        option.value = userId;
-        option.textContent = username;
-        userDropdown.appendChild(option);
-      }
-    }
-  } catch (error) {
-    console.error("Error filling user dropdown:", error);
-  }
-}
-
-// Funktion för att navigera till användarens profil
-function navigateToUserProfile(userId: string): void {
-  // Konstruera URL:en till användarens profil baserat på userId
-  const userProfileUrl = `./profileView.html?userId=${userId}`;
-  // Navigera till den angivna URL:en
-  window.location.href = userProfileUrl;
-}
-
-// Lägg till händelselyssnare för att navigera till användarens profil vid val i dropdown-listan
-const userDropdown = document.getElementById("userDropdown");
-if (userDropdown) {
-  userDropdown.addEventListener("change", (event) => {
-    const selectedUserId = (event.target as HTMLSelectElement).value;
-    if (selectedUserId) {
-      navigateToUserProfile(selectedUserId);
-    }
-  });
-}
-
-// Anropa funktionen för att fylla dropdown-listan när sidan laddas
-window.onload = fillUserDropdown;
-
 
 // Uppdatera inläggslistan vid sidans laddning
 window.onload = updatePostList;
