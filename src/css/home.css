@@ -3,6 +3,17 @@
     margin: 0;
 }
 
+/********************** Error ***********************/
+
+body #errorMessageContainer {
+    /* display: none; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/********************** Home ***********************/
+
 a:link { 
     text-decoration: none; 
 } 

@@ -1,5 +1,5 @@
 import { postNewUser } from "./fetch";
-import { errorMessage } from "./error.ts";
+import { errorMessage } from "./error";
 
 type NewUser = {
     username: string,

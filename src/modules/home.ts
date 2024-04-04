@@ -17,7 +17,8 @@ getStartedForm.addEventListener('submit', (event) => {
     loginSignupPage.style.display = 'block';
     signupPElement.style.display = 'block';
     signupForm.style.display = 'flex';
-    homePage.style.display = 'none';    console.log('get started');
+    homePage.style.display = 'none';    
+    console.log('get started');
 
     const userInput = getStartedUsername.value;
     moveUsernameToSignup.value = userInput;
