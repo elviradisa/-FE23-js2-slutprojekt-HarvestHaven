@@ -134,11 +134,11 @@ async function updatePostList(): Promise<void> {
 
           const postTitle = post.postTitle;
           const postContent = post.postContent;
-
+          const username = getYourUser(loggedInUserID).then(data =>{data.username})
           postElement.innerHTML = `
             <div id="postsList"><div>
               <img src=""/>
-              <h4 id="userID">${postId}</h4>
+              <h4 id="userID">${username}</h4>
             </div>
             <div>
               <h5>${postTitle}</h5>
