@@ -1,10 +1,12 @@
 import { postNewUser } from "./fetch";
+import { errorMessage } from "./error.ts";
 
 type NewUser = {
     username: string,
     password: string,
     userImage: string
 }
+
 
 let profileImage = ''; //global variabel för att spara bilden
 
@@ -56,11 +58,19 @@ signUpForm.addEventListener('submit', async (event) => {
 
     console.log(newUser)
 
-    let SignUpSuccessful = false;
+    let signUpSuccessful = false;
     const createNewUser = await postNewUser(newUser);
     console.log(newUser)
     window.location.href = "http://localhost:1234/home.html";
 
+
+    if (signUpSuccessful) {
+        console.log('Successful signup!');
+
+    } else {
+        console.log('Signup failed');
+        errorMessage('Signup failed, please try again!')
+    }
     signUpForm.reset();
 });
 
