@@ -36,7 +36,6 @@ loginFormEvent.addEventListener('submit', async (event) => {
                 loginSuccessful = true;
                 console.log(user)
                 localStorage.setItem('userId', userId);
-
                 break;
             }
         }

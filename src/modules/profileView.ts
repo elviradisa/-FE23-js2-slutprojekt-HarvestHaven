@@ -14,8 +14,7 @@ getYourUser(loggedInUserID).then(data => {
     const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
     const usernameInBody = document.querySelector('.myAccountUsername') as HTMLParagraphElement;
     usernameInHeader.textContent = data.username;
-    usernameInHeader.textContent = data.username;
-    console.log(data.username)
+    usernameInBody.textContent = data.username;
 });
 
 
