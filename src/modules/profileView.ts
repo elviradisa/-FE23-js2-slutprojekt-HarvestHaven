@@ -8,8 +8,32 @@ console.log(loggedInUserID)
 getYourUser(loggedInUserID).then(data => {
     const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
     const usernameInBody = document.querySelector('.myAccountUsername') as HTMLParagraphElement;
+
     usernameInHeader.textContent = data.username;
     usernameInBody.textContent = data.username;
+
+    displayCommentsInProfile(data.comments, data.comments)
+    console.log(data.comments)
+
+    const loggedInUserProfileImage = localStorage.getItem('profileImage')
+    const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
+    const profileImageX2 = document.getElementById('profilePicturex2') as HTMLImageElement;
+    // const profileImgInBody = document.querySelector('profilePicture') as HTMLImageElement;
+
+
+    if (loggedInUserProfileImage == 'pig') {
+        const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+        profileImage.src = imageLink.toString();
+        profileImageX2.src = imageLink.toString();
+    } else if (loggedInUserProfileImage == 'cow') {
+        const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
+        profileImage.src = imageLink.toString();
+        profileImageX2.src = imageLink.toString();
+    } else {
+        const imageLink = new URL('../media/img/chick.jpeg', import.meta.url)
+        profileImage.src = imageLink.toString();
+        profileImageX2.src = imageLink.toString();
+    }
 });
 
 // Funktion för att fylla dropdown-listan med användarnamn
@@ -100,7 +124,7 @@ type Comment = {
 //     try {
 //         // Anta att userId innehåller ID för den inloggade användaren
 //         const userId = "current_user_id"; // Ersätt "current_user_id" med den faktiska inloggade användarens ID
-//         const comments = await getCommentsForUser(userId); // Hämta kommentarerna för den aktuella användaren från backenden
+//         const comments = await getCommentsInProfile(userId); // Hämta kommentarerna för den aktuella användaren från backenden
 //         displayCommentsInProfile(comments); // Visa de senaste tre kommentarerna på profilsidan
 //     } catch (error) {
 //         console.error("Error fetching and displaying latest comments:", error);
@@ -113,9 +137,10 @@ type Comment = {
 function displayCommentsInProfile(comments: any, commentContent: string) {
     for (const postId in comments) {
         const comment = comments[postId];
-        createCommentsInProfile(comment, postId)
+        createCommentsInProfile(postId, comment.postContent)
+        // getCommentsInProfile(loggedInUserID, postId, comment)
         console.log(postId)
-        console.log(comment)
+        console.log(comment.postContent)
         console.log(commentContent)
         console.log(comments[postId])
     }
@@ -126,9 +151,11 @@ function createCommentsInProfile(postId: string, comment: string) {
 
     const eachCommentCard = createAndAppend(commentSection, 'div', ' ') as HTMLDivElement;
     eachCommentCard.id = postId
-    console.log(eachCommentCard.id)
+    console.log(eachCommentCard)
 
     const latestComments = createAndAppend(eachCommentCard, 'p', comment)
 }
+
+
 
 export { displayCommentsInProfile, Comment };
