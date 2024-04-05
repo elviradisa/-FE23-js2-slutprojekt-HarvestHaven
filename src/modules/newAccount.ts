@@ -69,7 +69,8 @@ signUpForm.addEventListener('submit', async (event) => {
             console.log('Successful signup!');
             localStorage.setItem('profileImage', profileImage);
             window.location.href = "http://localhost:1234/index.html";
-        } else {
+        } 
+        else {
             throw new Error('Signup failed');
         }
     } catch (error) {

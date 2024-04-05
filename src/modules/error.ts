@@ -36,6 +36,8 @@ function errorMessage(message: string) {
     errorMessageButton.style.borderRadius = '10px';
     errorMessageButton.addEventListener('click', () => {
         overlay.style.display = 'none';
+        errorMessageButton.remove();
+        errorMessageText.remove();
     })
 
     setTimeout(() => {
@@ -46,6 +48,8 @@ function errorMessage(message: string) {
     errorMessageContainer.appendChild(errorMessageText);
     errorMessageContainer.appendChild(errorMessageButton);
     document.body.appendChild(overlay);
+
+
 }
 
 export { errorMessage };
