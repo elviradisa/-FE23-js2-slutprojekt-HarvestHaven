@@ -1,4 +1,5 @@
-import { postForum1, allUsers } from "./fetch.ts";
+import { createAndAppend } from "./createAndAppend.ts";
+import { postForum1, allUsers, postCommentForum1 } from "./fetch.ts";
 import { getLoginUser, postNewCommentToUser } from "./fetch.ts";
 import { getYourUser } from "./fetch.ts";
 
@@ -16,7 +17,6 @@ getYourUser(loggedInUserID).then(data => {
 
   const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
 
-  // const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
   if (loggedInUserProfileImage == 'pig') {
     const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
     profileImage.src = imageLink.toString();
@@ -27,10 +27,12 @@ getYourUser(loggedInUserID).then(data => {
     const imageLink = new URL('../media/img/chick.jpeg', import.meta.url)
     profileImage.src = imageLink.toString();
   }
-  // const profileImage = document.getElementById('profileImage') as HTMLImageElement;
-  // profileImage.src = imageLink.toString();
-
 });
+
+type Comment = {
+  postContent: string,
+  postId: string
+};
 
 
 
@@ -107,25 +109,32 @@ async function createPost(event: Event): Promise<void> {
   }
 }
 
-type Comment = {
-  postContent: string,
-  postId: string
-}
-
 // Funktion för att skapa en kommentar
-async function createComment(postId: string, postTitle: string, commentContent: string): Promise<void> {
+async function createComment(postId: string, commentContent: string): Promise<void> {
   try {
-    const commentList = document.getElementById(`commentList_${postId}`);
-    if (commentList) {
-      const commentElement = document.createElement("div");
-      commentElement.classList.add("comment");
-      //Lägg in "USER ID på "kommentar:"
-      commentElement.innerHTML = `
-        <div>
-          <h6>Kommentar:</h6>
-          <p>${commentContent}</p>
-        </div>`;
-      commentList.appendChild(commentElement);
+    const comments = document.createElement('div');
+    // const commentList = document.getElementById(`commentList_${postId}`);
+    if (comments) {
+      const commentDiv = document.createElement("div");
+      commentDiv.classList.add("comment");
+      // //Lägg in "USER ID på "kommentar:"
+      const h6Element = createAndAppend(commentDiv, 'h6', 'Comment');
+      const commentText = createAndAppend(commentDiv, 'p', commentContent);
+      // commentElement.innerHTML = `
+      //   <div>
+      //     <h6>Kommentar:</h6>
+
+      //     <p>${commentContent}</p>
+      //   </div>`;
+      // console.log(commentList)
+      // console.log(postId)
+      // console.log(commentContent)
+      // const newComment: Comment = {
+      //   postContent: commentContent,
+      //   postId: postId
+      // }
+      // postCommentForum1(loggedInUserID, postId, commentContent)
+      comments.appendChild(commentDiv);
       // postNewCommentToUser(loggedInUserID, postId);
       // const addnewCommentToUser: Comment = {
       //   postContent: commentContent,
@@ -159,11 +168,14 @@ async function updatePostList(): Promise<void> {
 
           const postTitle = post.postTitle;
           const postContent = post.postContent;
-          const username = getYourUser(loggedInUserID).then(data => { data.username })
+          // let username = getYourUser(loggedInUserID).then(data => {
+          //   username = data.username
+          // })
+          // console.log(loggedInUserID)
           postElement.innerHTML = `
             <div id="postsList"><div>
               <img src=""/>
-              <h4 id="userID">${username}</h4>
+              <h4 id="userID">${loggedInUserID.username}</h4>
             </div>
             <div>
               <h5>${postTitle}</h5>
@@ -175,8 +187,7 @@ async function updatePostList(): Promise<void> {
             </div>
             <div id="commentList_${postId}"></div>
             </form>`;
-
-          postsList.appendChild(postElement);
+          postsList.prepend(postElement);
 
           // Lägg till händelselyssnare för klickhändelse på kommentarknappen
           const commentBtn = postElement.querySelector(".commentBtn") as HTMLButtonElement;
@@ -188,7 +199,8 @@ async function updatePostList(): Promise<void> {
               const commentInput = document.getElementById(`commentInput_${postId}`) as HTMLInputElement;
               const commentContent = commentInput.value.trim();
               if (commentContent) {
-                createComment(postId, postTitle, commentContent); // Anropa createComment med postId och postTitle
+                createComment(postId, commentContent) // Anropa createComment med postId och postTitle
+                // .then(postCommentForum1)
                 // Återställ kommentarfältet
                 commentInput.value = "";
               }
