@@ -3,10 +3,8 @@ import { postForum1, allUsers, postCommentForum1 } from "./fetch.ts";
 import { getLoginUser, postNewCommentToUser } from "./fetch.ts";
 import { getYourUser } from "./fetch.ts";
 
-
-// let userID: any;
-// let users: any;
 const loggedInUserID = localStorage.getItem('userId') as any;
+
 const loggedInUserProfileImage = localStorage.getItem('profileImage')
 console.log(loggedInUserProfileImage)
 console.log(loggedInUserID)
@@ -34,16 +32,10 @@ type Comment = {
   postId: string
 };
 
-
-
 // Funktion för att fylla dropdown-listan med användarnamn
 async function fillUserDropdown(): Promise<void> {
   try {
-    console.log("Filling user dropdown..."); // Kontrollmeddelande för att se om funktionen körs
-
     const users = await allUsers(); // Hämta användaruppgifter från Firebase
-    console.log("Users from Firebase:", users); // Kontrollera om data hämtas korrekt
-
     const userDropdown = document.getElementById("userDropdown") as HTMLSelectElement;
 
     if (userDropdown) {
@@ -67,9 +59,7 @@ async function fillUserDropdown(): Promise<void> {
 // Funktion för att navigera till användarens profil
 function navigateToUserProfile(userId: string): void {
   // Konstruera URL:en till användarens profil baserat på userId 
-  // -- profileView.html
-  const userProfileUrl = `http://localhost:1234/userprofile.html?userId=${userId}`;
-  // Navigera till den angivna URL:en
+  const userProfileUrl = `http://localhost:1234/profileView.html?userId=${userId}`;
   window.location.href = userProfileUrl;
 }
 // Lägg till händelselyssnare för att navigera till användarens profil vid val i dropdown-listan
@@ -83,11 +73,9 @@ if (userDropdown) {
   });
 }
 
-// Anropa funktionen för att fylla dropdown-listan när sidan laddas
 fillUserDropdown();
 
-
-// skapa ett inlägg
+// Funktion för att skapa inlägg
 async function createPost(event: Event): Promise<void> {
   event.preventDefault();
 
@@ -96,13 +84,16 @@ async function createPost(event: Event): Promise<void> {
 
   if (postTitle && postContent) {
     try {
-      // Skicka det nya inlägget till Firebase
-      await postForum1({ postTitle, postContent });
+      const user = await getYourUser(loggedInUserID);
+      // Ersätt loggedInUsername med användarnamnet för den inloggade användaren
+      const loggedInUsername = user.username; 
+      await postForum1({ userID: loggedInUserID, postTitle, postContent, username: loggedInUsername });
+
       // Återställ formuläret
       (document.getElementById("postTitle") as HTMLInputElement).value = "";
       (document.getElementById("postContent") as HTMLTextAreaElement).value = "";
 
-      updatePostList();
+      updatePostList(); 
     } catch (error) {
       console.error("Error creating post:", error);
     }
@@ -112,6 +103,7 @@ async function createPost(event: Event): Promise<void> {
 // Funktion för att skapa en kommentar
 async function createComment(postId: string, commentContent: string): Promise<void> {
   try {
+
     const comments = document.createElement('div');
     // const commentList = document.getElementById(`commentList_${postId}`);
     if (comments) {
@@ -135,6 +127,15 @@ async function createComment(postId: string, commentContent: string): Promise<vo
       // }
       // postCommentForum1(loggedInUserID, postId, commentContent)
       comments.appendChild(commentDiv);
+
+      //Lägg in "USER ID på "kommentar:"
+      commentElement.innerHTML = `
+        <div>
+          <h6>Kommentar:</h6>
+          <p>${commentContent}</p>
+        </div>`;
+      commentList.appendChild(commentElement);
+
       // postNewCommentToUser(loggedInUserID, postId);
       // const addnewCommentToUser: Comment = {
       //   postContent: commentContent,
@@ -142,6 +143,16 @@ async function createComment(postId: string, commentContent: string): Promise<vo
       // }
       // postNewCommentToUser(loggedInUserID, addnewCommentToUser)
 
+
+      const user = await getYourUser(loggedInUserID);
+      const username = user.username;
+      commentElement.innerHTML = `
+      <div>
+        <h6>Kommentar av ${username}:</h6>
+        <p>${commentContent}</p>
+        <button class="deleteCommentBtn" data-comment-id="${postId}">Delete</button>
+      </div>`;
+      commentList.appendChild(commentElement);
     } else {
       console.error(`Error: Could not find comment list for post ID ${postId}`);
     }
@@ -153,12 +164,13 @@ async function createComment(postId: string, commentContent: string): Promise<vo
 // Uppdatera inläggslistan
 async function updatePostList(): Promise<void> {
   try {
-    const posts = await getPosts();
+    const posts = await getPosts(); // Hämta alla inlägg från Firebase
     const postsList = document.getElementById("postsList");
 
     if (postsList) {
       postsList.innerHTML = ""; // Rensa tidigare inlägg
 
+      // Loopa igenom alla inlägg
       for (const postId in posts.forum1[0].posts) {
         const post = posts.forum1[0].posts[postId];
 
@@ -172,22 +184,49 @@ async function updatePostList(): Promise<void> {
           //   username = data.username
           // })
           // console.log(loggedInUserID)
+       
+
+          const userId = post.userID;
+
+          // Hämta användaruppgifter för författaren av inlägget
+          const user = await getYourUser(userId);
+          const username = user ? user.username : "Unknown User";
+
           postElement.innerHTML = `
-            <div id="postsList"><div>
-              <img src=""/>
-              <h4 id="userID">${loggedInUserID.username}</h4>
-            </div>
-            <div>
-              <h5>${postTitle}</h5>
-              <p>${postContent}</p>
-            </div>
-            <form id="commentForm_${postId}">
-              <textarea id="commentInput_${postId}" placeholder="Innehåll"></textarea>
-              <button class="commentBtn" data-post-id="${postId}" data-post-title="${postTitle}">Kommentera</button>
-            </div>
-            <div id="commentList_${postId}"></div>
-            </form>`;
+            <div class="post">
+              <div>
+                <img src=""/>
+                <h4 class="username">${username}</h4>
+              </div>
+              <div>
+                <h5>${postTitle}</h5>
+                <p>${postContent}</p>
+              </div>
+              <form id="commentForm_${postId}">
+                <textarea id="commentInput_${postId}" placeholder="Innehåll"></textarea>
+                <button class="commentBtn" data-post-id="${postId}" data-post-title="${postTitle}">Kommentera</button>
+              </form>
+              <div id="commentList_${postId}"></div>
+            </div>`;
+
           postsList.prepend(postElement);
+
+          // Ladda och visa kommentarerna för den aktuella posten
+          const comments = await getCommentsForPost(postId);
+          const commentListElement = postElement.querySelector(`#commentList_${postId}`);
+          if (commentListElement && comments) {
+            comments.forEach((comment: any) => {
+              const commentElement = document.createElement("div");
+              commentElement.classList.add("comment");
+              commentElement.innerHTML = `
+                <div>
+                  <h6>Kommentar av ${comment.username}:</h6>
+                  <p>${comment.commentContent}</p>
+                  <button class="deleteCommentBtn" data-comment-id="${comment.commentId}">Delete</button>
+                </div>`;
+              commentListElement.appendChild(commentElement);
+            });
+          }
 
           // Lägg till händelselyssnare för klickhändelse på kommentarknappen
           const commentBtn = postElement.querySelector(".commentBtn") as HTMLButtonElement;
@@ -213,6 +252,29 @@ async function updatePostList(): Promise<void> {
     }
   } catch (error) {
     console.error("Error updating post list:", error);
+  }
+}
+
+// Funktion för att hämta kommentarer för en specifik post
+async function getCommentsForPost(postId: string): Promise<any[]> {
+  try {
+    // Hämta kommentarerna för den aktuella posten från databasen
+    const response = await fetch(
+      `https://slutprojekt-js2-socialmedia-default-rtdb.europe-west1.firebasedatabase.app/forum1/0/comments/${postId}.json`
+    );
+    const data = await response.json();
+    if (data) {
+      // Konvertera kommentar-objekten till en array för enklare hantering
+      return Object.keys(data).map((commentId) => ({
+        commentId,
+        ...data[commentId],
+      }));
+    } else {
+      return []; // Returnera en tom array om det inte finns några kommentarer
+    }
+  } catch (error) {
+    console.error("Error fetching comments for post:", error);
+    return []; // Returnera en tom array om det uppstår ett fel
   }
 }
 
