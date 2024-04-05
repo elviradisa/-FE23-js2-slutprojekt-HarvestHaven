@@ -1,5 +1,5 @@
 import { postForum1, allUsers } from "./fetch.ts";
-import { getLoginUser } from "./fetch.ts";
+import { getLoginUser, postNewCommentToUser } from "./fetch.ts";
 import { getYourUser } from "./fetch.ts";
 
 
@@ -14,9 +14,20 @@ getYourUser(loggedInUserID).then(data => {
   const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
   usernameInHeader.textContent = data.username;
 
-  // const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+  const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
 
-  const profileImage = document.getElementById('profileImage') as HTMLImageElement;
+  // const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+  if (loggedInUserProfileImage == 'pig') {
+    const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  } else if (loggedInUserProfileImage == 'cow') {
+    const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  } else {
+    const imageLink = new URL('../media/img/chick.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  }
+  // const profileImage = document.getElementById('profileImage') as HTMLImageElement;
   // profileImage.src = imageLink.toString();
 
 });
@@ -96,6 +107,11 @@ async function createPost(event: Event): Promise<void> {
   }
 }
 
+type Comment = {
+  postContent: string,
+  postId: string
+}
+
 // Funktion för att skapa en kommentar
 async function createComment(postId: string, postTitle: string, commentContent: string): Promise<void> {
   try {
@@ -110,7 +126,12 @@ async function createComment(postId: string, postTitle: string, commentContent: 
           <p>${commentContent}</p>
         </div>`;
       commentList.appendChild(commentElement);
-      // postNewCommentToUser(loggedInUserID, postId, commentContent);
+      // postNewCommentToUser(loggedInUserID, postId);
+      // const addnewCommentToUser: Comment = {
+      //   postContent: commentContent,
+      //   postId: postId
+      // }
+      // postNewCommentToUser(loggedInUserID, addnewCommentToUser)
 
     } else {
       console.error(`Error: Could not find comment list for post ID ${postId}`);
