@@ -2,56 +2,58 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./index.ts" type="module"></script>
-    <link rel="stylesheet" href="./css/profileView.css">
-    <link rel="stylesheet" href="./css/forum.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./index.ts" type="module"></script>
+  <link rel="stylesheet" href="./css/profileView.css">
+  <link rel="stylesheet" href="./css/forum.css">
+  <title>Document</title>
 </head>
 
 <body>
-    <nav class="top-nav">
-        <div id="titleH">
-            <div><a href="home.html"><h1>HARVEST HAVEN</h1></a></div>
-          <a href="shop.html">ROAD SHOP</a>
-          <a href="help.html">HELP</a>
-          <a href="challenges.html">CHALLENGES</a>
-          <a href="profileView.html" class="selected">PROFILE</a>
-        </div>
-        
-        <div class="profile-info">
-          <!-- Namn -->
-          <p class="myAccountUsername"></p>
-          <!-- Bildikon för den valda profilbilden -->
-          <a class="chosenProfilePicture">
-            <img id="profilePicture" src="./media/img/cow.jpeg" alt="Profilbild">
-          </a>
-        </div>
-        <!-- Plats för flera funktioner/knappar här -->
-      </nav>
-      <div id="userDropdownContainer">
-        <label for="userDropdown">Visit User:</label>
-        <select id="userDropdown">
-          <!-- Options will be dynamically populated by TypeScript -->
-        </select>
-      </div>
-      <div id="titleH">
-        <h1>MY PROFILE</h1>
+  <nav class="top-nav">
+    <div id="titleH">
+      <div><a href="home.html">
+          <h1>HARVEST HAVEN</h1>
+        </a></div>
+      <a href="shop.html">ROAD SHOP</a>
+      <a href="help.html">HELP</a>
+      <a href="challenges.html">CHALLENGES</a>
+      <a href="profileView.html" class="selected">PROFILE</a>
     </div>
-    <section class="profileSection">
+
+    <div class="profile-info">
+      <!-- Namn -->
+      <p class="username"></p>
+      <!-- Bildikon för den valda profilbilden -->
+      <a class="chosenProfilePicture">
+        <img id="profilePicture" src="./media/img/cow.jpeg" alt="Profilbild">
+      </a>
+    </div>
+    <!-- Plats för flera funktioner/knappar här -->
+  </nav>
+  <div id="userDropdownContainer">
+    <label for="userDropdown">Visit User:</label>
+    <select id="userDropdown">
+      <!-- Options will be dynamically populated by TypeScript -->
+    </select>
+  </div>
+  <div id="titleH">
+    <h1>MY PROFILE</h1>
+  </div>
+  <section class="profileSection">
+    <div>
       <div>
-        <div>
-          <div class="profilePicture"></div>
-          <p class="myAccountUsername">Username: </p>
-          <button class="deleteAccountButton">Delete account</button>
-        </div>
-        <div class="commentDiv">
-          <h3>Your latest comments:</h3>
-          <div class="latestComments"></div>
-        </div>
+        <div class="profilePicture"></div>
+        <p class="myAccountUsername">Username: </p>
+        <button class="deleteAccountButton">Delete account</button>
       </div>
-    </section>
+      <div class="commentDiv">
+        <h3>Your latest comments:</h3>
+        <div class="latestComments"></div>
+      </div>
+    </div>
+  </section>
 </body>
 
 </html>

@@ -5,7 +5,7 @@ import { getYourUser } from "./fetch.ts";
 
 // let userID: any;
 // let users: any;
-const loggedInUserID = localStorage.getItem('userId');
+const loggedInUserID = localStorage.getItem('userId') as any;
 const loggedInUserProfileImage = localStorage.getItem('profileImage')
 console.log(loggedInUserProfileImage)
 console.log(loggedInUserID)
@@ -14,8 +14,10 @@ getYourUser(loggedInUserID).then(data => {
   const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
   usernameInHeader.textContent = data.username;
 
+  // const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+
   const profileImage = document.getElementById('profileImage') as HTMLImageElement;
-  console.log(profileImage.src = `${loggedInUserProfileImage}`);
+  // profileImage.src = imageLink.toString();
 
 });
 
@@ -108,6 +110,8 @@ async function createComment(postId: string, postTitle: string, commentContent: 
           <p>${commentContent}</p>
         </div>`;
       commentList.appendChild(commentElement);
+      // postNewCommentToUser(loggedInUserID, postId, commentContent);
+
     } else {
       console.error(`Error: Could not find comment list for post ID ${postId}`);
     }
@@ -134,7 +138,7 @@ async function updatePostList(): Promise<void> {
 
           const postTitle = post.postTitle;
           const postContent = post.postContent;
-          const username = getYourUser(loggedInUserID).then(data =>{data.username})
+          const username = getYourUser(loggedInUserID).then(data => { data.username })
           postElement.innerHTML = `
             <div id="postsList"><div>
               <img src=""/>

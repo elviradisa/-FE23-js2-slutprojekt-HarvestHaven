@@ -1,31 +1,42 @@
-import { postForum2 , allUsers } from "./fetch.ts";
+import { postForum2, allUsers, getYourUser } from "./fetch.ts";
+
+//Hämtar den inloggade användaren
+const loggedInUserID = localStorage.getItem('userId') as string;
+console.log(loggedInUserID)
+
+getYourUser(loggedInUserID).then(data => {
+  const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
+  const usernameInBody = document.querySelector('.myAccountUsername') as HTMLParagraphElement;
+  usernameInHeader.textContent = data.username;
+  usernameInBody.textContent = data.username;
+});
 
 // Funktion för att fylla dropdown-listan med användarnamn
 async function fillUserDropdown(): Promise<void> {
-    try {
-        console.log("Filling user dropdown..."); // Kontrollmeddelande för att se om funktionen körs
+  try {
+    console.log("Filling user dropdown..."); // Kontrollmeddelande för att se om funktionen körs
 
-        const users = await allUsers(); // Hämta användaruppgifter från Firebase
-        console.log("Users from Firebase:", users); // Kontrollera om data hämtas korrekt
+    const users = await allUsers(); // Hämta användaruppgifter från Firebase
+    console.log("Users from Firebase:", users); // Kontrollera om data hämtas korrekt
 
-        const userDropdown = document.getElementById("userDropdown") as HTMLSelectElement;
+    const userDropdown = document.getElementById("userDropdown") as HTMLSelectElement;
 
-        if (userDropdown) {
-            userDropdown.innerHTML = ""; // Rensa dropdown-listan innan fyllning
+    if (userDropdown) {
+      userDropdown.innerHTML = ""; // Rensa dropdown-listan innan fyllning
 
-            for (const userId in users) {
-                const username = users[userId].username;
-                const option = document.createElement("option");
-                option.value = userId;
-                option.textContent = username;
-                userDropdown.appendChild(option);
-            }
-        }
-
-        console.log("User dropdown filled successfully.");
-    } catch (error) {
-        console.error("Error filling user dropdown:", error);
+      for (const userId in users) {
+        const username = users[userId].username;
+        const option = document.createElement("option");
+        option.value = userId;
+        option.textContent = username;
+        userDropdown.appendChild(option);
+      }
     }
+
+    console.log("User dropdown filled successfully.");
+  } catch (error) {
+    console.error("Error filling user dropdown:", error);
+  }
 }
 
 // Funktion för att navigera till användarens profil
@@ -63,7 +74,7 @@ async function createPost(event: Event): Promise<void> {
       // Återställ formuläret
       (document.getElementById("postTitle") as HTMLInputElement).value = "";
       (document.getElementById("postContent") as HTMLTextAreaElement).value = "";
-      
+
       updatePostList();
     } catch (error) {
       console.error("Error creating post:", error);
@@ -134,20 +145,20 @@ async function updatePostList(): Promise<void> {
           // Lägg till händelselyssnare för klickhändelse på kommentarknappen
           const commentBtn = postElement.querySelector(".commentBtn") as HTMLButtonElement;
           commentBtn.addEventListener("click", (event) => {
-              event.preventDefault(); // Förhindra standardbeteendet för knappen
-              const postId = commentBtn.dataset.postId?.toString(); // Hämta postId från dataset på kommentarknappen
-              const postTitle = commentBtn.dataset.postTitle; // Hämta postTitle från dataset på kommentarknappen
-              if (postId && postTitle) {
-                  const commentInput = document.getElementById(`commentInput_${postId}`) as HTMLInputElement;
-                  const commentContent = commentInput.value.trim();
-                  if (commentContent) {
-                      createComment(postId, postTitle, commentContent); // Anropa createComment med postId och postTitle
-                      // Återställ kommentarfältet
-                      commentInput.value = "";
-                  }
-              } else {
-                  console.error("Error: Could not extract postId or postTitle from dataset");
+            event.preventDefault(); // Förhindra standardbeteendet för knappen
+            const postId = commentBtn.dataset.postId?.toString(); // Hämta postId från dataset på kommentarknappen
+            const postTitle = commentBtn.dataset.postTitle; // Hämta postTitle från dataset på kommentarknappen
+            if (postId && postTitle) {
+              const commentInput = document.getElementById(`commentInput_${postId}`) as HTMLInputElement;
+              const commentContent = commentInput.value.trim();
+              if (commentContent) {
+                createComment(postId, postTitle, commentContent); // Anropa createComment med postId och postTitle
+                // Återställ kommentarfältet
+                commentInput.value = "";
               }
+            } else {
+              console.error("Error: Could not extract postId or postTitle from dataset");
+            }
           });
         }
       }
