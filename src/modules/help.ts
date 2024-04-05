@@ -31,8 +31,7 @@ async function fillUserDropdown(): Promise<void> {
 // Funktion för att navigera till användarens profil
 function navigateToUserProfile(userId: string): void {
   // Konstruera URL:en till användarens profil baserat på userId 
-  // -- profileView.html
-  const userProfileUrl = `http://localhost:1234/userprofile.html?userId=${userId}`;
+  const userProfileUrl = `http://localhost:1234/profileView.html?userId=${userId}`;
   // Navigera till den angivna URL:en
   window.location.href = userProfileUrl;
 }
@@ -112,11 +111,12 @@ async function updatePostList(): Promise<void> {
 
           const postTitle = post.postTitle;
           const postContent = post.postContent;
+          const userId = post.userId; // Antag att detta är användarens ID som skapade inlägget
 
           postElement.innerHTML = `
             <div id="postsList"><div>
               <img src=""/>
-              <h4 id="userID">${postId}</h4>
+              <h4 id="userID">${userId}</h4> <!-- Visar användarens ID -->
             </div>
             <div>
               <h5>${postTitle}</h5>
@@ -131,24 +131,24 @@ async function updatePostList(): Promise<void> {
 
           postsList.appendChild(postElement);
 
-         // Lägg till händelselyssnare för klickhändelse på kommentarknappen
-         const commentBtn = postElement.querySelector(".commentBtn") as HTMLButtonElement;
-         commentBtn.addEventListener("click", (event) => {
-             event.preventDefault(); // Förhindra standardbeteendet för knappen
-             const postId = commentBtn.dataset.postId?.toString(); // Hämta postId från dataset på kommentarknappen
-             const postTitle = commentBtn.dataset.postTitle; // Hämta postTitle från dataset på kommentarknappen
-             if (postId && postTitle) {
-                 const commentInput = document.getElementById(`commentInput_${postId}`) as HTMLInputElement;
-                 const commentContent = commentInput.value.trim();
-                 if (commentContent) {
-                     createComment(postId, postTitle, commentContent); // Anropa createComment med postId och postTitle
-                     // Återställ kommentarfältet
-                     commentInput.value = "";
-                 }
-             } else {
-                 console.error("Error: Could not extract postId or postTitle from dataset");
-             }
-         });
+          // Lägg till händelselyssnare för klickhändelse på kommentarknappen
+          const commentBtn = postElement.querySelector(".commentBtn") as HTMLButtonElement;
+          commentBtn.addEventListener("click", (event) => {
+              event.preventDefault(); // Förhindra standardbeteendet för knappen
+              const postId = commentBtn.dataset.postId?.toString(); // Hämta postId från dataset på kommentarknappen
+              const postTitle = commentBtn.dataset.postTitle; // Hämta postTitle från dataset på kommentarknappen
+              if (postId && postTitle) {
+                  const commentInput = document.getElementById(`commentInput_${postId}`) as HTMLInputElement;
+                  const commentContent = commentInput.value.trim();
+                  if (commentContent) {
+                      createComment(postId, postTitle, commentContent); // Anropa createComment med postId och postTitle
+                      // Återställ kommentarfältet
+                      commentInput.value = "";
+                  }
+              } else {
+                  console.error("Error: Could not extract postId or postTitle from dataset");
+              }
+          });
         }
       }
     }
