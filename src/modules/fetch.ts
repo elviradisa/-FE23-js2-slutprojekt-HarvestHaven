@@ -127,6 +127,21 @@ async function postForum3(postData: any) {
     return info;
 }
 
+async function postNewCommentToUser(userId: string, postId: string, commentContent: any) {
+    const url = baseUrl + `AllUsers/${userId}/comments/${postId}/${commentContent}.json;`
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(userId),
+        headers: header
+    }
+
+    const response = await fetch(url, options);
+    const info = await response.json();
+    console.log(info)
+    return info;
+}
+
 async function deletePost(postId: string, forum: string) {
     const commentURL = baseUrl + `${forum}/0/posts/${postId}.json`;
 
@@ -167,20 +182,4 @@ async function getCommentsInProfile(userId: string) {
 }
 
 
-
-// async function patch(patchData: any) {
-//     const URL = baseUrl + 'forum1/0/posts.json';
-
-//     const options = {
-//         method: 'POST',
-//         body: JSON.stringify(postData),
-//         headers: header
-//     }
-
-//     const response = await fetch(URL, options);
-//     const info = await response.json();
-//     console.log(info)
-//     return info;
-// }
-
-export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postNewCommentToUser,  deletePost, deleteAccount, getCommentsInProfile }
