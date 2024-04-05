@@ -167,19 +167,37 @@ async function deleteAccount(userId: string) {
     console.log(info)
 }
 
-async function getCommentsInProfile(userId: string) {
-    // const url = baseUrl + `AllUsers/${userId}/comments.json`;
-    const url = baseUrl + `AllUsers/-NtVjmivseXUbEYBwlrL/comments.json`;
+async function getCommentsInProfile(userId: string): Promise<Comment[]> {
+    const url = baseUrl + `AllUsers/${userId}/comments.json`;
     const options = {
         method: 'GET',
         headers: header
     }
+    console.log("Fetching comments for user with ID:", userId);
+console.log("URL:", url);
 
-    const response = await fetch(url, options);
-    const info = await response.json();
-    console.log(info)
-    return info;
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('Failed to fetch comments');
+        }
+        const data = await response.json();
+        if (data) {
+            // Konvertera datan till en array av kommentarer
+            const comments: Comment[] = Object.values(data);
+            return comments;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        console.error("Error fetching comments:", error);
+        throw error;
+    }
 }
+
+
+
+
 
 
 export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postNewCommentToUser,  deletePost, deleteAccount, getCommentsInProfile }
