@@ -3,13 +3,14 @@
     margin: 0;
 }
 
-/********************** Error ***********************/
+/********************** Background Image ***********************/
 
-body #errorMessageContainer {
-    /* display: none; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../media/img/background4.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /********************** Home ***********************/
@@ -19,6 +20,7 @@ a:link {
 } 
 a:visited { 
     text-decoration: none; 
+    color: black;
 } 
 a:hover { 
     text-decoration: none; 
@@ -44,28 +46,40 @@ a:active {
 }
 
 #home-h1 {
-    font-size: 20px;
+    font-size: 30px;
+    color: white;
 }
 
 .home-login-button {
     background: none;
     border: none;
-    margin-right: 10px;
+    font-size: 20px;
+    margin-right: 20px;
+    color: white;
 }
 
 .home-signup-button {
     padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
     background-color: rgb(115, 168, 115);
 }
 
 #home-main {
     margin-top: 200px;
     text-align: center;
+    background-color: rgba(243, 243, 243, 0.862);
+    padding: 80px;
+    border-radius: 10px;
 }
 
 .home-h2 {
-    font-size: 40px;
+    font-size: 50px;
     margin: 20px 0 20px 0;
+}
+
+.home-top-quote, .home-bottom-quote {
+    font-size: 20px;
 }
 
 #home-signup-form {
@@ -74,15 +88,20 @@ a:active {
     border: 1px solid grey;
     display: flex;
     justify-content: space-between;
+    border-radius: 10px;
 }
 
 #home-signup-input {
     border: none;
+    font-size: 20px;
+    background-color: transparent;
 }
 
 .home-signup-form-button {
     background-color: rgb(115, 168, 115);
     padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
 }
 
 /********************** Login Signup ***********************/
@@ -95,7 +114,7 @@ a:active {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 100px;
 }
 
 #login-signup-header {
@@ -103,9 +122,10 @@ a:active {
 }
 
 .login-signup-container {
-    background-color: rgb(243, 243, 243);
-    padding: 100px;
-    height: 500px;
+    background-color: rgba(243, 243, 243, 0.862);
+    padding: 50px;
+    min-height: 500px;
+    border-radius: 10px;
 }
 
 .login-signup-div {
@@ -139,20 +159,30 @@ a:active {
 .loginPElement,
 .signupPElement {
     margin-bottom: 60px;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 #username-form,
 #password-form {
-    font-size: 15px;
-    padding: 5px;
-    width: 250px;
+    font-size: 20px;
+    padding: 10px;
+    width: 300px;
+    border-radius: 10px;
+}
+
+#createUsername-form,
+#createPassword-form {
+    font-size: 20px;
+    padding: 10px;
+    width: 300px;
+    border-radius: 10px;
 }
 
 #login-go-button,
 #signup-go-button {
-    padding: 5px 10px 5px 10px;
-
+    padding: 10px 20px;
+    margin-top: 30px;
+    font-size: 15px;
 }
 
 .profile-images {
@@ -161,8 +191,8 @@ a:active {
 }
 
 .chick-profile {
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     background-size: contain;
     border-radius: 50%;
     background-image: url("../media/img/chick.jpeg");
@@ -175,8 +205,8 @@ a:active {
 }
 
 .cow-profile {
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     background-size: contain;
     border-radius: 50%;
     background-image: url("../media/img/cow.jpeg");
@@ -189,8 +219,8 @@ a:active {
 }
 
 .pig-profile {
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     background-size: contain;
     border-radius: 50%;
     background-image: url("../media/img/pig.jpeg");
@@ -210,6 +240,7 @@ a:active {
     border-radius: 50%;
     background-size: contain;
     display: none;
+    margin: 0;
 }
 
 .selected-chick {

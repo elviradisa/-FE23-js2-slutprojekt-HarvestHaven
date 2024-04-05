@@ -1,5 +1,5 @@
-import { get, getCommentsInProfile, getYourUser } from "./fetch.ts";
-import { createAndAppend } from "./createAndAppend.ts";
+import { get, getCommentsInProfile, getYourUser } from "./fetch";
+import { createAndAppend } from "./createAndAppend";
 
 type Comment = {
     commentContent: string,
