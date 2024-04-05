@@ -22,6 +22,7 @@ getStartedForm.addEventListener('submit', (event) => {
 
     const userInput = getStartedUsername.value;
     moveUsernameToSignup.value = userInput;
+    getStartedForm.reset();
     console.log(userInput)
     console.log(moveUsernameToSignup);
 })

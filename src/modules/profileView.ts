@@ -1,4 +1,4 @@
-import { getCommentsInProfile, allUsers } from "./fetch.ts"; // Importera funktionen för att hämta användarens kommentarer
+import { getCommentsInProfile, allUsers, getYourUser } from "./fetch.ts"; // Importera funktionen för att hämta användarens kommentarer
 import { createAndAppend } from "./createAndAppend.ts"; // Importera hjälpfunktionen för att skapa och lägga till element i DOM:en
 
 // Funktion för att fylla dropdown-listan med användarnamn

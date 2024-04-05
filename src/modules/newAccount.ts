@@ -4,9 +4,8 @@ import { errorMessage } from "./error";
 type NewUser = {
     username: string,
     password: string,
-    userImage: string
+    userImage: string      
 }
-
 
 let profileImage = ''; //global variabel för att spara bilden
 
@@ -46,32 +45,34 @@ signUpForm.addEventListener('submit', async (event) => {
     const passwordInput = document.querySelector('#createPassword-form') as HTMLInputElement;
 
     const userInputValue = userInput.value;
-    console.log(userInputValue)
     const passwordInputValue = passwordInput.value;
+    console.log(userInputValue)
     console.log(passwordInputValue)
+
+    if (!userInputValue || !passwordInputValue) {
+        errorMessage('Please fill out both username and password!');
+        signUpForm.reset();
+        return;
+    } 
 
     const newUser: NewUser = {
         username: userInputValue,
         password: passwordInputValue,
-        userImage: profileImage
+        userImage: profileImage //skickar med den valda bilden i objektet
     }
-
-
     console.log(newUser)
 
-    let signUpSuccessful = false;
-    const createNewUser = await postNewUser(newUser);
-    console.log(newUser.userImage)
-    localStorage.setItem('profileImage', profileImage)
-    window.location.href = "http://localhost:1234/home.html";
-
-
-    if (signUpSuccessful) {
-        console.log('Successful signup!');
-
-    } else {
-        console.log('Signup failed');
-        errorMessage('Signup failed, please try again!')
+    try {
+        const createNewUser = await postNewUser(newUser);
+        if (createNewUser && createNewUser.name) {
+            console.log('Successful signup!');
+            localStorage.setItem('profileImage', profileImage);
+            window.location.href = "http://localhost:1234/home.html";
+        } else {
+            throw new Error('Signup failed');
+        }
+    } catch (error) {
+        errorMessage('Signup failed, please try again!');
     }
     signUpForm.reset();
 });
