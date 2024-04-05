@@ -1,6 +1,17 @@
 import { getCommentsInProfile, allUsers, getYourUser } from "./fetch.ts"; // Importera funktionen för att hämta användarens kommentarer
 import { createAndAppend } from "./createAndAppend.ts"; // Importera hjälpfunktionen för att skapa och lägga till element i DOM:en
 
+//Hämtar den inloggade användaren
+const loggedInUserID = localStorage.getItem('userId') as string;
+console.log(loggedInUserID)
+
+getYourUser(loggedInUserID).then(data => {
+    const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
+    const usernameInBody = document.querySelector('.myAccountUsername') as HTMLParagraphElement;
+    usernameInHeader.textContent = data.username;
+    usernameInBody.textContent = data.username;
+});
+
 // Funktion för att fylla dropdown-listan med användarnamn
 async function fillUserDropdown(): Promise<void> {
     try {
@@ -57,55 +68,67 @@ type Comment = {
     userId: string;
 }
 
-// Funktion för att visa tre senaste kommentarerna på profilsidan
-function displayCommentsInProfile(comments: Comment[]) {
-    const commentSection = document.querySelector('.latestComments') as HTMLDivElement; // Hitta sektionen där kommentarerna ska visas
+// // Funktion för att visa tre senaste kommentarerna på profilsidan
+// function displayCommentsInProfile(comments: Comment[]) {
+//     const commentSection = document.querySelector('.latestComments') as HTMLDivElement; // Hitta sektionen där kommentarerna ska visas
 
-    // Loopa genom varje kommentar
-    for (const comment of comments) {
-        // Skapa ett nytt element för varje kommentar
-        const eachCommentCard = document.createElement('div');
-        eachCommentCard.classList.add('commentCard'); // Lägg till en CSS-klass för styling
+//     // Loopa genom varje kommentar
+//     for (const comment of comments) {
+//         // Skapa ett nytt element för varje kommentar
+//         const eachCommentCard = document.createElement('div');
+//         eachCommentCard.classList.add('commentCard'); // Lägg till en CSS-klass för styling
 
-        // Skapa ett element för att visa själva kommentaren
-        const commentContent = document.createElement('p');
-        commentContent.textContent = comment.commentContent;
+//         // Skapa ett element för att visa själva kommentaren
+//         const commentContent = document.createElement('p');
+//         commentContent.textContent = comment.commentContent;
 
-        // Skapa ett element för att visa användar-ID:t för kommentaren (kan vara användbart för framtida användning)
-        const commentUserId = document.createElement('span');
-        commentUserId.textContent = `User ID: ${comment.userId}`;
+//         // Skapa ett element för att visa användar-ID:t för kommentaren (kan vara användbart för framtida användning)
+//         const commentUserId = document.createElement('span');
+//         commentUserId.textContent = `User ID: ${comment.userId}`;
 
-        // Lägg till kommentar och användar-ID till det nya kortet
-        eachCommentCard.appendChild(commentContent);
-        eachCommentCard.appendChild(commentUserId);
+//         // Lägg till kommentar och användar-ID till det nya kortet
+//         eachCommentCard.appendChild(commentContent);
+//         eachCommentCard.appendChild(commentUserId);
 
-        // Lägg till det nya kortet till kommentarsektionen
-        commentSection.appendChild(eachCommentCard);
+//         // Lägg till det nya kortet till kommentarsektionen
+//         commentSection.appendChild(eachCommentCard);
+//     }
+// }
+
+// // Hämta och visa tre senaste kommentarerna när sidan laddas
+// window.onload = async () => {
+//     try {
+//         // Anta att userId innehåller ID för den inloggade användaren
+//         const userId = "current_user_id"; // Ersätt "current_user_id" med den faktiska inloggade användarens ID
+//         const comments = await getCommentsForUser(userId); // Hämta kommentarerna för den aktuella användaren från backenden
+//         displayCommentsInProfile(comments); // Visa de senaste tre kommentarerna på profilsidan
+//     } catch (error) {
+//         console.error("Error fetching and displaying latest comments:", error);
+//     }
+// };
+
+
+
+
+function displayCommentsInProfile(comments: any, commentContent: string) {
+    for (const postId in comments) {
+        const comment = comments[postId];
+        createCommentsInProfile(comment, postId)
+        console.log(postId)
+        console.log(comment)
+        console.log(commentContent)
+        console.log(comments[postId])
     }
 }
 
-// Hämta och visa tre senaste kommentarerna när sidan laddas
-window.onload = async () => {
-    try {
-        // Anta att userId innehåller ID för den inloggade användaren
-        const userId = "current_user_id"; // Ersätt "current_user_id" med den faktiska inloggade användarens ID
-        const comments = await getCommentsForUser(userId); // Hämta kommentarerna för den aktuella användaren från backenden
-        displayCommentsInProfile(comments); // Visa de senaste tre kommentarerna på profilsidan
-    } catch (error) {
-        console.error("Error fetching and displaying latest comments:", error);
-    }
-};
+function createCommentsInProfile(postId: string, comment: string) {
+    const commentSection = document.querySelector('.latestComments') as HTMLDivElement;
 
-// Funktion för att hämta kommentarerna för den aktuella användaren från backenden
-async function getCommentsForUser(userId: string): Promise<Comment[]> {
-    // Implementera denna funktion för att hämta användarens kommentarer från backenden
-    // Returnera en lista med kommentarer för den aktuella användaren
-    // Exempel på en HTTP-begäran till backenden för att hämta kommentarerna för den inloggade användaren:
-    // const response = await fetch(`backend_url/users/${userId}/comments`);
-    // const data = await response.json();
-    // return data.comments;
-    // Ersätt "backend_url" med den faktiska URL:en till din backend-API för att hämta användardata
-    return [];
+    const eachCommentCard = createAndAppend(commentSection, 'div', ' ') as HTMLDivElement;
+    eachCommentCard.id = postId
+    console.log(eachCommentCard.id)
+
+    const latestComments = createAndAppend(eachCommentCard, 'p', comment)
 }
 
 export { displayCommentsInProfile, Comment };
