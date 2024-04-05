@@ -1,6 +1,34 @@
-import { postForum1, getYourUser, allUsers } from "./fetch.ts";
+import { postForum1, allUsers } from "./fetch.ts";
+import { getLoginUser, postNewCommentToUser } from "./fetch.ts";
+import { getYourUser } from "./fetch.ts";
 
 const loggedInUserID = localStorage.getItem('userId') as any;
+
+const loggedInUserProfileImage = localStorage.getItem('profileImage')
+console.log(loggedInUserProfileImage)
+console.log(loggedInUserID)
+
+getYourUser(loggedInUserID).then(data => {
+  const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
+  usernameInHeader.textContent = data.username;
+
+  const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
+
+  // const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+  if (loggedInUserProfileImage == 'pig') {
+    const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  } else if (loggedInUserProfileImage == 'cow') {
+    const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  } else {
+    const imageLink = new URL('../media/img/chick.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  }
+  // const profileImage = document.getElementById('profileImage') as HTMLImageElement;
+  // profileImage.src = imageLink.toString();
+
+});
 
 // Funktion för att fylla dropdown-listan med användarnamn
 async function fillUserDropdown(): Promise<void> {
@@ -70,6 +98,11 @@ async function createPost(event: Event): Promise<void> {
   }
 }
 
+type Comment = {
+  postContent: string,
+  postId: string
+}
+
 // Funktion för att skapa en kommentar
 async function createComment(postId: string, postTitle: string, commentContent: string): Promise<void> {
   try {
@@ -77,6 +110,21 @@ async function createComment(postId: string, postTitle: string, commentContent: 
     if (commentList) {
       const commentElement = document.createElement("div");
       commentElement.classList.add("comment");
+
+      //Lägg in "USER ID på "kommentar:"
+      commentElement.innerHTML = `
+        <div>
+          <h6>Kommentar:</h6>
+          <p>${commentContent}</p>
+        </div>`;
+      commentList.appendChild(commentElement);
+      // postNewCommentToUser(loggedInUserID, postId);
+      // const addnewCommentToUser: Comment = {
+      //   postContent: commentContent,
+      //   postId: postId
+      // }
+      // postNewCommentToUser(loggedInUserID, addnewCommentToUser)
+
 
       const user = await getYourUser(loggedInUserID);
       const username = user.username;

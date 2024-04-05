@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="./index.ts" type="module"></script>
+  <script src="./modules/profileView.ts" type="module"></script>
   <link rel="stylesheet" href="./css/profileView.css">
   <link rel="stylesheet" href="./css/forum.css">
   <title>Document</title>
@@ -22,23 +23,38 @@
       <a href="challenges.html">CHALLENGES</a>
       <a href="profileView.html" class="selected">PROFILE</a>
     </div>
-
     <div class="profile-info">
       <!-- Namn -->
       <p class="username"></p>
       <!-- Bildikon för den valda profilbilden -->
       <a class="chosenProfilePicture">
-        <img id="profilePicture" src="./media/img/cow.jpeg" alt="Profilbild">
+        <img id="profilePicture" alt="Profilbild">
       </a>
-    </nav>
+
+    </div>
+  <!-- Plats för flera funktioner/knappar här -->
+  </nav>
+  <div id="userDropdownContainer">
+    <label for="userDropdown">Visit User:</label>
+    <select id="userDropdown">
+      <!-- Options will be dynamically populated by TypeScript -->
+    </select>
+  </div>
+
   <div id="titleH">
     <h1>MY PROFILE</h1>
   </div>
   <section class="profileSection">
     <div>
+
       <div>
         <div class="profilePicture"></div>
         <p class="username">Username: </p>
+
+      <div class="myProfile"><a class="chosenProfilePicture">
+          <img id="profilePicturex2" alt="No profile Picture"></img></a>
+        <p class="myAccountUsername">Username: </p>
+
         <button class="deleteAccountButton">Delete account</button>
       </div>
       <div class="commentDiv">

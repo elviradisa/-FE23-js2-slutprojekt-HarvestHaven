@@ -1,6 +1,28 @@
 import { postForum2, getYourUser, allUsers } from "./fetch.ts";
 
-const loggedInUserID = localStorage.getItem('userId') as any;
+
+//Hämtar den inloggade användaren
+const loggedInUserID = localStorage.getItem('userId') as string;
+console.log(loggedInUserID)
+
+getYourUser(loggedInUserID).then(data => {
+  const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
+  usernameInHeader.textContent = data.username;
+
+  const loggedInUserProfileImage = localStorage.getItem('profileImage')
+  const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
+
+  if (loggedInUserProfileImage == 'pig') {
+    const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  } else if (loggedInUserProfileImage == 'cow') {
+    const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  } else {
+    const imageLink = new URL('../media/img/chick.jpeg', import.meta.url)
+    profileImage.src = imageLink.toString();
+  }
+});
 
 // Funktion för att fylla dropdown-listan med användarnamn
 async function fillUserDropdown(): Promise<void> {

@@ -8,7 +8,7 @@ type Comment = {
 
 function displayCommentsInProfile(comments: Comment[]) {
     const commentSection = document.querySelector('.latestComments') as HTMLDivElement;
-    commentSection.innerHTML = ''; // Rensa tidigare innehåll
+    commentSection.innerHTML = ''; 
 
     // Visa bara de tre senaste kommentarerna
     const latestComments = comments.slice(0, 3);
@@ -33,9 +33,9 @@ function displayCommentsInProfile(comments: Comment[]) {
 // Hämta och visa tre senaste kommentarerna när sidan laddas
 window.onload = async () => {
     try {
-        const userId = "current_user_id"; // Ersätt med den faktiska inloggade användarens ID
-        const comments = await getCommentsInProfile(userId);
-        displayCommentsInProfile(comments.slice(0, 3)); // Visa bara de tre senaste kommentarerna
+        const userId = "current_user_id"; 
+        // const comments = await getCommentsInProfile(userId);
+        // displayCommentsInProfile(comments.slice(0, 3)); // Visa bara de tre senaste kommentarerna
     } catch (error) {
         console.error("Error fetching and displaying latest comments:", error);
     }

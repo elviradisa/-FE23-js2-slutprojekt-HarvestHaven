@@ -43,7 +43,7 @@ async function getYourUser(userId: string) {
 
     const response = await fetch(URL, options);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
 }
 
@@ -127,8 +127,8 @@ async function postForum3(postData: any) {
     return info;
 }
 
-async function postNewCommentToUser(userId: string, postId: string, commentContent: any) {
-    const url = baseUrl + `AllUsers/${userId}/comments/${postId}/${commentContent}.json;`
+async function postNewCommentToUser(userId: string, postId: any) {
+    const url = baseUrl + `AllUsers/${userId}/comments/${postId}/.json;`
 
     const options = {
         method: 'POST',
@@ -167,8 +167,11 @@ async function deleteAccount(userId: string) {
     console.log(info)
 }
 
-async function getCommentsInProfile(userId: string): Promise<Comment[]> {
-    const url = baseUrl + `AllUsers/${userId}/comments.json`;
+
+async function getCommentsInProfile(userId: string, commentId: string, commentContent: string) {
+    const url = baseUrl + `AllUsers/${userId}/comments/${commentId}/${commentContent}.json`;
+    // const url = baseUrl + `AllUsers/-NtVjmivseXUbEYBwlrL/comments.json`;
+
     const options = {
         method: 'GET',
         headers: header
@@ -195,9 +198,4 @@ console.log("URL:", url);
     }
 }
 
-
-
-
-
-
-export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postNewCommentToUser,  deletePost, deleteAccount, getCommentsInProfile }
+export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postNewCommentToUser, deletePost, deleteAccount, getCommentsInProfile }
