@@ -64,10 +64,11 @@ signUpForm.addEventListener('submit', async (event) => {
 
     try {
         const createNewUser = await postNewUser(newUser);
+
         if (createNewUser && createNewUser.name) {
             console.log('Successful signup!');
             localStorage.setItem('profileImage', profileImage);
-            window.location.href = "http://localhost:1234/home.html";
+            window.location.href = "http://localhost:1234/index.html";
         } else {
             throw new Error('Signup failed');
         }
