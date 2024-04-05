@@ -158,8 +158,7 @@ async function deleteAccount(userId: string) {
     const commentURL = baseUrl + `AllUsers/${userId}.json`;
 
     const options = {
-        method: 'DELETE',
-        body: JSON.stringify(userId),
+        method: 'DELETE'
     }
 
     const response = await fetch(commentURL, options);

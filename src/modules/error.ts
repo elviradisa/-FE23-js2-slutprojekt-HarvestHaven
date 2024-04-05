@@ -48,8 +48,6 @@ function errorMessage(message: string) {
     errorMessageContainer.appendChild(errorMessageText);
     errorMessageContainer.appendChild(errorMessageButton);
     document.body.appendChild(overlay);
-
-
 }
 
 export { errorMessage };
