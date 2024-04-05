@@ -97,6 +97,21 @@ async function postForum1(postData: any) {
     return info;
 }
 
+async function postCommentForum1(userId: string, commentId: string, commentContent: string) {
+    const URL = baseUrl + `forum1/0/comments.json`;
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(userId),
+        headers: header
+    }
+
+    const response = await fetch(URL, options);
+    const info = await response.json();
+    console.log(info)
+    return info;
+}
+
 async function postForum2(postData: any) {
     const URL = baseUrl + 'forum2/0/posts.json';
 
@@ -197,4 +212,7 @@ console.log("URL:", url);
     }
 }
 
-export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postNewCommentToUser, deletePost, deleteAccount, getCommentsInProfile }
+
+
+export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postCommentForum1, postNewCommentToUser, deletePost, deleteAccount, getCommentsInProfile }
+
