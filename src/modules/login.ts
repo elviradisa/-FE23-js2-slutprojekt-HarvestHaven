@@ -51,7 +51,7 @@ loginFormEvent.addEventListener('submit', async (event) => {
     if (loginSuccessful) {
         console.log('Successful login!');
 
-        window.location.href = `http://localhost:1234/shop.html`;
+        window.location.href = `./shop.html`;
 
     } else {
         console.log('Login failed');
