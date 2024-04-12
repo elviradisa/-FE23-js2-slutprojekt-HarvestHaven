@@ -1,7 +1,7 @@
-import { getCommentsInProfile, allUsers, getYourUser } from "./fetch"; // Importera funktionen för att hämta användarens kommentarer
+import { getCommentsInProfile, allUsers, getYourUser, get, getpostsFromUsers } from "./fetch"; // Importera funktionen för att hämta användarens kommentarer
 import { createAndAppend } from "./createAndAppend"; // Importera hjälpfunktionen för att skapa och lägga till element i DOM:en
 
-//Hämtar den inloggade användaren
+//Hämtar den inloggade användaren samt dess posts
 const loggedInUserID = localStorage.getItem('userId') as string;
 console.log(loggedInUserID)
 
@@ -12,14 +12,9 @@ getYourUser(loggedInUserID).then(data => {
     usernameInHeader.textContent = data.username;
     usernameInBody.textContent = data.username;
 
-    displayCommentsInProfile(data.comments, data.comments)
-    console.log(data.comments)
-
     const loggedInUserProfileImage = localStorage.getItem('profileImage')
     const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
     const profileImageX2 = document.getElementById('profilePicturex2') as HTMLImageElement;
-    // const profileImgInBody = document.querySelector('profilePicture') as HTMLImageElement;
-
 
     if (loggedInUserProfileImage == 'pig') {
         const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
@@ -34,6 +29,9 @@ getYourUser(loggedInUserID).then(data => {
         profileImage.src = imageLink.toString();
         profileImageX2.src = imageLink.toString();
     }
+    displayPostsInProfile(loggedInUserID, 'forum1');
+    displayPostsInProfile(loggedInUserID, 'forum2');
+    displayPostsInProfile(loggedInUserID, 'forum3');
 });
 
 // Funktion för att fylla dropdown-listan med användarnamn
@@ -42,7 +40,7 @@ async function fillUserDropdown(): Promise<void> {
         console.log("Filling user dropdown..."); // Kontrollmeddelande för att se om funktionen körs
 
         const users = await allUsers(); // Hämta användaruppgifter från Firebase
-        console.log("Users from Firebase:", users); // Kontrollera om data hämtas korrekt
+        // console.log("Users from Firebase:", users); // Kontrollera om data hämtas korrekt
 
         const userDropdown = document.getElementById("userDropdown") as HTMLSelectElement;
 
@@ -92,70 +90,33 @@ type Comment = {
     userId: string;
 }
 
-// // Funktion för att visa tre senaste kommentarerna på profilsidan
-// function displayCommentsInProfile(comments: Comment[]) {
-//     const commentSection = document.querySelector('.latestComments') as HTMLDivElement; // Hitta sektionen där kommentarerna ska visas
+async function displayPostsInProfile(userId: string, forum: string) {
+    const posts = await getpostsFromUsers(forum);
 
-//     // Loopa genom varje kommentar
-//     for (const comment of comments) {
-//         // Skapa ett nytt element för varje kommentar
-//         const eachCommentCard = document.createElement('div');
-//         eachCommentCard.classList.add('commentCard'); // Lägg till en CSS-klass för styling
+    userId = loggedInUserID;
+    let postId: string;
 
-//         // Skapa ett element för att visa själva kommentaren
-//         const commentContent = document.createElement('p');
-//         commentContent.textContent = comment.commentContent;
+    for (postId in posts) {
 
-//         // Skapa ett element för att visa användar-ID:t för kommentaren (kan vara användbart för framtida användning)
-//         const commentUserId = document.createElement('span');
-//         commentUserId.textContent = `User ID: ${comment.userId}`;
+        var post = posts[postId];
 
-//         // Lägg till kommentar och användar-ID till det nya kortet
-//         eachCommentCard.appendChild(commentContent);
-//         eachCommentCard.appendChild(commentUserId);
-
-//         // Lägg till det nya kortet till kommentarsektionen
-//         commentSection.appendChild(eachCommentCard);
-//     }
-// }
-
-// // Hämta och visa tre senaste kommentarerna när sidan laddas
-// window.onload = async () => {
-//     try {
-//         // Anta att userId innehåller ID för den inloggade användaren
-//         const userId = "current_user_id"; // Ersätt "current_user_id" med den faktiska inloggade användarens ID
-//         const comments = await getCommentsInProfile(userId); // Hämta kommentarerna för den aktuella användaren från backenden
-//         displayCommentsInProfile(comments); // Visa de senaste tre kommentarerna på profilsidan
-//     } catch (error) {
-//         console.error("Error fetching and displaying latest comments:", error);
-//     }
-// };
-
-
-
-
-function displayCommentsInProfile(comments: any, commentContent: string) {
-    for (const postId in comments) {
-        const comment = comments[postId];
-        createCommentsInProfile(postId, comment.postContent)
-        // getCommentsInProfile(loggedInUserID, postId, comment)
-        console.log(postId)
-        console.log(comment.postContent)
-        console.log(commentContent)
-        console.log(comments[postId])
+        if (post.userID === loggedInUserID) {
+            createCommentsInProfile(postId, post.postContent)
+        }
     }
 }
 
-function createCommentsInProfile(postId: string, comment: string) {
+async function createCommentsInProfile(postId: any, postContent: string) {
+    // const posts = await getpostsFromUsers('forum1', postId);
+
     const commentSection = document.querySelector('.latestComments') as HTMLDivElement;
 
     const eachCommentCard = createAndAppend(commentSection, 'div', ' ') as HTMLDivElement;
     eachCommentCard.id = postId
-    console.log(eachCommentCard)
 
-    const latestComments = createAndAppend(eachCommentCard, 'p', comment)
+    const latestPosts = createAndAppend(eachCommentCard, 'p', postContent)
+    localStorage.setItem('postId', postId)
 }
 
 
-
-export { displayCommentsInProfile, Comment };
+export { Comment };

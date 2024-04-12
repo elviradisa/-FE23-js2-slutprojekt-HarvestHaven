@@ -77,14 +77,14 @@ async function createPost(event: Event): Promise<void> {
     try {
       const user = await getYourUser(loggedInUserID);
       // Ersätt loggedInUsername med användarnamnet för den inloggade användaren
-      const loggedInUsername = user.username; 
+      const loggedInUsername = user.username;
       await postForum3({ userID: loggedInUserID, postTitle, postContent, username: loggedInUsername });
 
       // Återställ formuläret
       (document.getElementById("postTitle") as HTMLInputElement).value = "";
       (document.getElementById("postContent") as HTMLTextAreaElement).value = "";
 
-      updatePostList(); 
+      updatePostList();
     } catch (error) {
       console.error("Error creating post:", error);
     }
@@ -158,7 +158,7 @@ async function updatePostList(): Promise<void> {
               <div id="commentList_${postId}"></div>
             </div>`;
 
-          postsList.appendChild(postElement);
+          postsList.prepend(postElement);
 
           // Ladda och visa kommentarerna för den aktuella posten
           const comments = await getCommentsForPost(postId);
