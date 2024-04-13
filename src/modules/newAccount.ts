@@ -4,7 +4,7 @@ import { errorMessage } from "./error";
 type NewUser = {
     username: string,
     password: string,
-    userImage: string      
+    userImage: string
 }
 
 let profileImage = ''; //global variabel för att spara bilden
@@ -53,14 +53,14 @@ signUpForm.addEventListener('submit', async (event) => {
         errorMessage('Please fill out both username and password!');
         signUpForm.reset();
         return;
-    } 
+    }
 
     const newUser: NewUser = {
         username: userInputValue,
         password: passwordInputValue,
         userImage: profileImage //skickar med den valda bilden i objektet
     }
-    console.log(newUser)
+    // console.log(newUser.userImage)
 
     try {
         const createNewUser = await postNewUser(newUser);
@@ -69,7 +69,7 @@ signUpForm.addEventListener('submit', async (event) => {
             console.log('Successful signup!');
             localStorage.setItem('profileImage', profileImage);
             window.location.href = "http://localhost:1234/index.html";
-        } 
+        }
         else {
             throw new Error('Signup failed');
         }

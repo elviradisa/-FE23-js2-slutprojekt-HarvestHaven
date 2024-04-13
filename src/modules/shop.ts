@@ -1,6 +1,6 @@
 import { createAndAppend } from "./createAndAppend.ts";
-import { postForum1, allUsers, postCommentForum1 } from "./fetch.ts";
-import { getLoginUser, postNewCommentToUser } from "./fetch.ts";
+import { postForum1, allUsers, postCommentForum1, getCommentsFromForum } from "./fetch.ts";
+import { getLoginUser } from "./fetch.ts";
 import { getYourUser } from "./fetch.ts";
 
 const loggedInUserID = localStorage.getItem('userId') as any;
@@ -30,6 +30,7 @@ getYourUser(loggedInUserID).then(data => {
 type Comment = {
   postContent: string,
   postId: string
+  username: string
 };
 
 // Funktion för att fylla dropdown-listan med användarnamn
@@ -86,14 +87,15 @@ async function createPost(event: Event): Promise<void> {
     try {
       const user = await getYourUser(loggedInUserID);
       // Ersätt loggedInUsername med användarnamnet för den inloggade användaren
-      const loggedInUsername = user.username; 
-      await postForum1({ userID: loggedInUserID, postTitle, postContent, username: loggedInUsername });
+      const loggedInUsername = user.username;
+      const loggedInUserProfileImage = user.userImage
+      console.log(loggedInUserProfileImage)
+      await postForum1({ userImage: loggedInUserProfileImage, userID: loggedInUserID, postTitle, postContent, username: loggedInUsername });
 
       // Återställ formuläret
       (document.getElementById("postTitle") as HTMLInputElement).value = "";
       (document.getElementById("postContent") as HTMLTextAreaElement).value = "";
-
-      updatePostList(); 
+      updatePostList();
     } catch (error) {
       console.error("Error creating post:", error);
     }
@@ -102,39 +104,48 @@ async function createPost(event: Event): Promise<void> {
 
 // Funktion för att skapa en kommentar
 async function createComment(postId: string, commentContent: string): Promise<void> {
+  const user = await getYourUser(loggedInUserID);
+  const loggedInUsername = user.username;
+  console.log(loggedInUsername)
   try {
 
     const comments = document.createElement('div');
-    // const commentList = document.getElementById(`commentList_${postId}`);
+    const commentList = document.getElementById(`commentList_${postId}`);
     if (comments) {
       const commentDiv = document.createElement("div");
       commentDiv.classList.add("comment");
       // //Lägg in "USER ID på "kommentar:"
-      const h6Element = createAndAppend(commentDiv, 'h6', 'Comment');
-      const commentText = createAndAppend(commentDiv, 'p', commentContent);
-      // commentElement.innerHTML = `
-      //   <div>
-      //     <h6>Kommentar:</h6>
+      postCommentForum1({ postContent: commentContent, postId: postId, username: loggedInUsername, userId: loggedInUserID }, postId)
 
-      //     <p>${commentContent}</p>
-      //   </div>`;
-      // console.log(commentList)
-      // console.log(postId)
-      // console.log(commentContent)
+      const newComment: Comment = {
+        postContent: commentContent,
+        postId: postId,
+        username: 'amanda'
+      }
+      commentDiv.innerHTML = `
+        <div>
+          <h6>Kommentar:</h6>
+
+          <p>${newComment.postContent}</p>
+        </div>`;
+      console.log(commentList)
+      console.log(postId)
+      console.log(commentContent)
       // const newComment: Comment = {
       //   postContent: commentContent,
-      //   postId: postId
+      //   postId: postId,
+      //   username: 'amanda'
       // }
-      // postCommentForum1(loggedInUserID, postId, commentContent)
+      // postCommentForum1({ postContent: commentContent, postId: postId, username: loggedInUsername, userId: loggedInUserID }, loggedInUserID, postId)
       comments.appendChild(commentDiv);
 
       //Lägg in "USER ID på "kommentar:"
-      commentElement.innerHTML = `
-        <div>
-          <h6>Kommentar:</h6>
-          <p>${commentContent}</p>
-        </div>`;
-      commentList.appendChild(commentElement);
+      // commentElement.innerHTML = `
+      //   <div>
+      //     <h6>Kommentar:</h6>
+      //     <p>${commentContent}</p>
+      //   </div>`;
+      // commentList.appendChild(commentElement);
 
       // postNewCommentToUser(loggedInUserID, postId);
       // const addnewCommentToUser: Comment = {
@@ -146,13 +157,13 @@ async function createComment(postId: string, commentContent: string): Promise<vo
 
       const user = await getYourUser(loggedInUserID);
       const username = user.username;
-      commentElement.innerHTML = `
-      <div>
-        <h6>Kommentar av ${username}:</h6>
-        <p>${commentContent}</p>
-        <button class="deleteCommentBtn" data-comment-id="${postId}">Delete</button>
-      </div>`;
-      commentList.appendChild(commentElement);
+      // commentElement.innerHTML = `
+      // <div>
+      //   <h6>Kommentar av ${username}:</h6>
+      //   <p>${commentContent}</p>
+      //   <button class="deleteCommentBtn" data-comment-id="${postId}">Delete</button>
+      // </div>`;
+      // commentList.appendChild(commentElement);
     } else {
       console.error(`Error: Could not find comment list for post ID ${postId}`);
     }
@@ -167,6 +178,7 @@ async function updatePostList(): Promise<void> {
     const posts = await getPosts(); // Hämta alla inlägg från Firebase
     const postsList = document.getElementById("postsList");
 
+
     if (postsList) {
       postsList.innerHTML = ""; // Rensa tidigare inlägg
 
@@ -180,12 +192,6 @@ async function updatePostList(): Promise<void> {
 
           const postTitle = post.postTitle;
           const postContent = post.postContent;
-          // let username = getYourUser(loggedInUserID).then(data => {
-          //   username = data.username
-          // })
-          // console.log(loggedInUserID)
-       
-
           const userId = post.userID;
 
           // Hämta användaruppgifter för författaren av inlägget
@@ -195,8 +201,7 @@ async function updatePostList(): Promise<void> {
           postElement.innerHTML = `
             <div class="post">
               <div>
-                <img src=""/>
-                <h4 class="username">${username}</h4>
+                <h4class="username">Posted by: <b>${username}</b></h4>
               </div>
               <div>
                 <h5>${postTitle}</h5>
@@ -212,7 +217,10 @@ async function updatePostList(): Promise<void> {
           postsList.prepend(postElement);
 
           // Ladda och visa kommentarerna för den aktuella posten
+          // const comments = await getCommentsFromForum('forum1', postId)
+          // console.log(comments)
           const comments = await getCommentsForPost(postId);
+          console.log(comments)
           const commentListElement = postElement.querySelector(`#commentList_${postId}`);
           if (commentListElement && comments) {
             comments.forEach((comment: any) => {
@@ -257,6 +265,7 @@ async function updatePostList(): Promise<void> {
 
 // Funktion för att hämta kommentarer för en specifik post
 async function getCommentsForPost(postId: string): Promise<any[]> {
+  console.log(postId)
   try {
     // Hämta kommentarerna för den aktuella posten från databasen
     const response = await fetch(

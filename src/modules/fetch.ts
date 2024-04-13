@@ -19,6 +19,22 @@ async function get() {
     return info;
 }
 
+async function getpostsFromUsers(forum: string) {
+    const URL = baseUrl + `${forum}/0/posts/.json`;
+
+    const options = {
+        method: 'GET',
+        headers: header
+    }
+
+    const response = await fetch(URL, options);
+    const info = await response.json();
+    console.log(info)
+    return info;
+}
+
+
+
 async function getLoginUser() {
     const URL = baseUrl + 'AllUsers/.json'
 
@@ -97,12 +113,26 @@ async function postForum1(postData: any) {
     return info;
 }
 
-async function postCommentForum1(userId: string, commentId: string, commentContent: string) {
-    const URL = baseUrl + `forum1/0/comments.json`;
+async function postCommentForum1(comment: object, postId: string) {
+    const URL = baseUrl + `forum1/0/comments/${postId}/allCommentId.json`;
 
     const options = {
         method: 'POST',
-        body: JSON.stringify(userId),
+        body: JSON.stringify(comment),
+        headers: header
+    }
+
+
+    const response = await fetch(URL, options);
+    const info = await response.json();
+    console.log(info)
+    return info;
+}
+async function getCommentsFromForum(forum: string, postId: string) {
+    const URL = baseUrl + `${forum}/0/comments/${postId}.json`;
+
+    const options = {
+        method: 'GET',
         headers: header
     }
 
@@ -142,21 +172,6 @@ async function postForum3(postData: any) {
     return info;
 }
 
-async function postNewCommentToUser(userId: string, postId: any) {
-    const url = baseUrl + `AllUsers/${userId}/comments/${postId}/.json;`
-
-    const options = {
-        method: 'POST',
-        body: JSON.stringify(userId),
-        headers: header
-    }
-
-    const response = await fetch(url, options);
-    const info = await response.json();
-    console.log(info)
-    return info;
-}
-
 async function deletePost(postId: string, forum: string) {
     const commentURL = baseUrl + `${forum}/0/posts/${postId}.json`;
 
@@ -191,7 +206,7 @@ async function getCommentsInProfile(userId: string, commentId: string, commentCo
         headers: header
     }
     console.log("Fetching comments for user with ID:", userId);
-console.log("URL:", url);
+    console.log("URL:", url);
 
     try {
         const response = await fetch(url, options);
@@ -212,7 +227,5 @@ console.log("URL:", url);
     }
 }
 
-
-
-export { get, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postCommentForum1, postNewCommentToUser, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getpostsFromUsers, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postCommentForum1, getCommentsFromForum, deletePost, deleteAccount, getCommentsInProfile }
 
