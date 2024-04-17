@@ -2,10 +2,10 @@ import { getCommentsInProfile, allUsers, getYourUser, get, getpostsFromUsers } f
 import { createAndAppend } from "./createAndAppend"; // Importera hjälpfunktionen för att skapa och lägga till element i DOM:en
 
 //Hämtar den inloggade användaren samt dess posts
-const loggedInUserID = localStorage.getItem('userId') as string;
-console.log(loggedInUserID)
+const userId = localStorage.getItem('userId') as string;
+console.log(userId)
 
-getYourUser(loggedInUserID).then(data => {
+getYourUser(userId).then(data => {
     const usernameInHeader = document.querySelector('.username') as HTMLParagraphElement;
     const usernameInBody = document.querySelector('.myAccountUsername') as HTMLParagraphElement;
 
@@ -29,9 +29,9 @@ getYourUser(loggedInUserID).then(data => {
         profileImage.src = imageLink.toString();
         profileImageX2.src = imageLink.toString();
     }
-    displayPostsInProfile(loggedInUserID, 'forum1');
-    displayPostsInProfile(loggedInUserID, 'forum2');
-    displayPostsInProfile(loggedInUserID, 'forum3');
+    displayPostsInProfile(userId, 'forum1');
+    displayPostsInProfile(userId, 'forum2');
+    displayPostsInProfile(userId, 'forum3');
 });
 
 // Funktion för att fylla dropdown-listan med användarnamn
@@ -93,14 +93,14 @@ type Comment = {
 async function displayPostsInProfile(userId: string, forum: string) {
     const posts = await getpostsFromUsers(forum);
 
-    userId = loggedInUserID;
+    userId = userId;
     let postId: string;
 
     for (postId in posts) {
 
         var post = posts[postId];
 
-        if (post.userID === loggedInUserID) {
+        if (post.userID === userId) {
             createCommentsInProfile(postId, post.postContent)
         }
     }
