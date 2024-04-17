@@ -68,7 +68,7 @@ signUpForm.addEventListener('submit', async (event) => {
         if (createNewUser && createNewUser.name) {
             console.log('Successful signup!');
             localStorage.setItem('profileImage', profileImage);
-            window.location.href = "http://localhost:1234/index.html";
+            window.location.href = "./src/home.ts";
         }
         else {
             throw new Error('Signup failed');

@@ -10,7 +10,7 @@ deleteAccountBtn.addEventListener('click', async () => {
     const userId = getUserId();
     if (userId) {
         await deleteAccount(userId);
-        window.location.href = "http://localhost:1234/index.html";
+        window.location.href = "./home.ts";
     } else {
         console.log('Error removing task')
     }
