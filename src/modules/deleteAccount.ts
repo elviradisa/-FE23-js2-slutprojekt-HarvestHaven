@@ -1,5 +1,5 @@
 import { deleteAccount } from "./fetch";
-// import { getUserId } from "./login"
+
 function getUserId() {
     console.log('delete');
     return localStorage.getItem('userId');

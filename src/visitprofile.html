@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="./index.ts" type="module"></script>
   <script src="./modules/visitprofile.ts" type="module"></script>
-  <script src="./modules/deleteAccount.ts" type="module"></script>
+  <!-- <script src="./modules/deleteAccount.ts" type="module"></script> -->
   <link rel="stylesheet" href="./css/profileView.css">
   <link rel="stylesheet" href="./css/forum.css">
   <title>Profile</title>
@@ -37,26 +37,29 @@
   </nav>
 
   <div id="userDropdownContainer">
-    <label for="userDropdown">Visit User:</label>
-    <select id="userDropdown">
-      <!-- Options will be dynamically populated by TypeScript -->
-    </select>
+    <form>
+      <label for="userDropdown">Visit User:</label>
+      <select id="userDropdown">
+        <!-- Options will be dynamically populated by TypeScript -->
+      </select>
+      <!-- <button type="submit" for="" userDropdown id="visitUserFromDropdown">Visit</button> -->
+    </form>
   </div>
 
   <div id="titleH">
-    <h1>Welcome to my profile!</h1>
+    <h2>Visiting profile:</h2>
   </div>
   <section class="profileSection">
 
 
     <div class="myProfile"><a class="chosenProfilePicture">
         <img id="profilePicturex2" alt="No profile Picture"></img></a>
-      <p class="myAccountUsername">Username: </p>
+      <p class="visitedProfileUsername"></p>
 
     </div>
     <div class="commentDiv">
       <h3>Your latest comments:</h3>
-      <div class="latestComments"></div>
+      <div class="latestComments" id="test"></div>
     </div>
   </section>
 </body>

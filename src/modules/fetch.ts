@@ -29,7 +29,7 @@ async function getpostsFromUsers(forum: string) {
 
     const response = await fetch(URL, options);
     const info = await response.json();
-    console.log(info)
+    // console.log(info)
     return info;
 }
 
@@ -59,9 +59,23 @@ async function getYourUser(userId: string) {
 
     const response = await fetch(URL, options);
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     return data;
 }
+
+// async function getVisitingUser(userId: string) {
+//     const URL = baseUrl + `AllUsers/${userId}.json`
+
+//     const options = {
+//         method: 'GET',
+//         headers: header
+//     }
+
+//     const response = await fetch(URL, options);
+//     const data = await response.json();
+//     console.log(data);
+//     return data;
+// }
 
 async function postNewUser(newUser: any) {
     const url = baseUrl + 'AllUsers/.json';
