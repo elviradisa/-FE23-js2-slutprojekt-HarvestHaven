@@ -4,7 +4,6 @@ const header = {
     "Content-type": "application/json; charset=UTF-8"
 }
 
-
 async function get() {
     const URL = baseUrl + '.json';
 
@@ -29,11 +28,9 @@ async function getpostsFromUsers(forum: string) {
 
     const response = await fetch(URL, options);
     const info = await response.json();
-    console.log(info)
+    // console.log(info)
     return info;
 }
-
-
 
 async function getLoginUser() {
     const URL = baseUrl + 'AllUsers/.json'
@@ -59,7 +56,7 @@ async function getYourUser(userId: string) {
 
     const response = await fetch(URL, options);
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     return data;
 }
 
@@ -97,7 +94,6 @@ async function allUsers(): Promise<any> {
     }
 }
 
-
 async function postForum1(postData: any) {
     const URL = baseUrl + 'forum1/0/posts.json';
 
@@ -128,19 +124,19 @@ async function postCommentForum1(comment: object, postId: string) {
     console.log(info)
     return info;
 }
-async function getCommentsFromForum(forum: string, postId: string) {
-    const URL = baseUrl + `${forum}/0/comments/${postId}.json`;
+// async function getCommentsFromForum(forum: string, postId: string) {
+//     const URL = baseUrl + `${forum}/0/comments/${postId}.json`;
 
-    const options = {
-        method: 'GET',
-        headers: header
-    }
+//     const options = {
+//         method: 'GET',
+//         headers: header
+//     }
 
-    const response = await fetch(URL, options);
-    const info = await response.json();
-    console.log(info)
-    return info;
-}
+//     const response = await fetch(URL, options);
+//     const info = await response.json();
+//     console.log(info)
+//     return info;
+// }
 
 async function postForum2(postData: any) {
     const URL = baseUrl + 'forum2/0/posts.json';
@@ -196,7 +192,6 @@ async function deleteAccount(userId: string) {
     console.log(info)
 }
 
-
 async function getCommentsInProfile(userId: string, commentId: string, commentContent: string) {
     const url = baseUrl + `AllUsers/${userId}/comments/${commentId}/${commentContent}.json`;
     // const url = baseUrl + `AllUsers/-NtVjmivseXUbEYBwlrL/comments.json`;
@@ -227,5 +222,5 @@ async function getCommentsInProfile(userId: string, commentId: string, commentCo
     }
 }
 
-export { get, getpostsFromUsers, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postCommentForum1, getCommentsFromForum, deletePost, deleteAccount, getCommentsInProfile }
+export { get, getpostsFromUsers, getLoginUser, getYourUser, postNewUser, allUsers, postForum1, postForum2, postForum3, postCommentForum1, deletePost, deleteAccount, getCommentsInProfile }
 

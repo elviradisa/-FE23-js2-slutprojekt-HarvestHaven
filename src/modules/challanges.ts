@@ -11,10 +11,10 @@ getYourUser(loggedInUserID).then(data => {
   const loggedInUserProfileImage = localStorage.getItem('profileImage')
   const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
 
-  if (loggedInUserProfileImage == 'pig') {
+  if (data.userImage == 'pig') {
     const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
     profileImage.src = imageLink.toString();
-  } else if (loggedInUserProfileImage == 'cow') {
+  } else if (data.userImage == 'cow') {
     const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
     profileImage.src = imageLink.toString();
   } else {
@@ -48,18 +48,20 @@ async function fillUserDropdown(): Promise<void> {
 }
 
 // Funktion för att navigera till användarens profil
-function navigateToUserProfile(userId: string): void {
-  // Konstruera URL:en till användarens profil baserat på userId?userId=${userId} 
-  const userProfileUrl = `http://localhost:1234/visitprofile.html?userId=${userId}`;
+function navigateToUserProfile(selectedUserId: string): void {
+  // Konstruera URL:en till användarens profil baserat på userId 
+  const userProfileUrl = `./visitprofile.html?userId=` + selectedUserId;
+  // Navigera till den angivna URL:en
   window.location.href = userProfileUrl;
 }
 // Lägg till händelselyssnare för att navigera till användarens profil vid val i dropdown-listan
 const userDropdown = document.getElementById("userDropdown");
 if (userDropdown) {
   userDropdown.addEventListener("change", (event) => {
-    const selectedUserId = (event.target as HTMLSelectElement).value;
+    let selectedUserId = (event.target as HTMLSelectElement).value;
     if (selectedUserId) {
       navigateToUserProfile(selectedUserId);
+      localStorage.setItem('selectedUserId', selectedUserId)
     }
   });
 }
@@ -144,8 +146,7 @@ async function updatePostList(): Promise<void> {
           postElement.innerHTML = `
             <div class="post">
               <div>
-                <img src=""/>
-                <h4 class="username">${username}</h4>
+                <h4 class="username">Posted by: ${username}</h4>
               </div>
               <div>
                 <h5>${postTitle}</h5>
