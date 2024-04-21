@@ -1,7 +1,6 @@
 import { getLoginUser } from "./fetch";
 import { errorMessage } from "./error";
 
-
 type LoginUser = {
     firebaseID?: string,
     username: string,

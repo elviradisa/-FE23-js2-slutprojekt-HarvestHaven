@@ -1,6 +1,4 @@
-import { createAndAppend } from "./createAndAppend.ts";
-import { postForum1, allUsers, postCommentForum1, getCommentsFromForum } from "./fetch.ts";
-import { getLoginUser } from "./fetch.ts";
+import { postForum1, allUsers, postCommentForum1 } from "./fetch.ts";
 import { getYourUser } from "./fetch.ts";
 
 
@@ -16,10 +14,10 @@ getYourUser(loggedInUserID).then(data => {
 
   const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
 
-  if (loggedInUserProfileImage == 'pig') {
+  if (data.userImage == 'pig') {
     const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
     profileImage.src = imageLink.toString();
-  } else if (loggedInUserProfileImage == 'cow') {
+  } else if (data.userImage == 'cow') {
     const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
     profileImage.src = imageLink.toString();
   } else {
@@ -59,9 +57,10 @@ async function fillUserDropdown(): Promise<void> {
 }
 
 // Funktion för att navigera till användarens profil
-function navigateToUserProfile(userId: string): void {
+function navigateToUserProfile(selectedUserId: string): void {
   // Konstruera URL:en till användarens profil baserat på userId 
-  const userProfileUrl = `./visitprofile.html`;
+  const userProfileUrl = `./visitprofile.html?userId=` + selectedUserId;
+
   // Navigera till den angivna URL:en
   window.location.href = userProfileUrl;
 }
@@ -69,9 +68,10 @@ function navigateToUserProfile(userId: string): void {
 const userDropdown = document.getElementById("userDropdown");
 if (userDropdown) {
   userDropdown.addEventListener("change", (event) => {
-    const selectedUserId = (event.target as HTMLSelectElement).value;
+    let selectedUserId = (event.target as HTMLSelectElement).value;
     if (selectedUserId) {
       navigateToUserProfile(selectedUserId);
+      localStorage.setItem('selectedUserId', selectedUserId)
     }
   });
 }
@@ -122,7 +122,7 @@ async function createComment(postId: string, commentContent: string): Promise<vo
       const newComment: Comment = {
         postContent: commentContent,
         postId: postId,
-        username: 'amanda'
+        username: loggedInUserID
       }
       commentDiv.innerHTML = `
         <div>
@@ -203,7 +203,7 @@ async function updatePostList(): Promise<void> {
           postElement.innerHTML = `
             <div class="post">
               <div>
-                <h4class="username">Posted by: <b>${username}</b></h4>
+                <h4 class="username">Posted by: ${username}</h4>
               </div>
               <div>
                 <h5>${postTitle}</h5>

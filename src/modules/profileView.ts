@@ -1,4 +1,4 @@
-import { getCommentsInProfile, allUsers, getYourUser, get, getpostsFromUsers } from "./fetch"; // Importera funktionen för att hämta användarens kommentarer
+import { allUsers, getYourUser, getpostsFromUsers } from "./fetch"; // Importera funktionen för att hämta användarens kommentarer
 import { createAndAppend } from "./createAndAppend"; // Importera hjälpfunktionen för att skapa och lägga till element i DOM:en
 
 //Hämtar den inloggade användaren samt dess posts
@@ -12,15 +12,14 @@ getYourUser(loggedInUserID).then(data => {
     usernameInHeader.textContent = data.username;
     usernameInBody.textContent = data.username;
 
-    const loggedInUserProfileImage = localStorage.getItem('profileImage')
     const profileImage = document.getElementById('profilePicture') as HTMLImageElement;
     const profileImageX2 = document.getElementById('profilePicturex2') as HTMLImageElement;
 
-    if (loggedInUserProfileImage == 'pig') {
+    if (data.userImage == 'pig') {
         const imageLink = new URL('../media/img/pig.jpeg', import.meta.url)
         profileImage.src = imageLink.toString();
         profileImageX2.src = imageLink.toString();
-    } else if (loggedInUserProfileImage == 'cow') {
+    } else if (data.userImage == 'cow') {
         const imageLink = new URL('../media/img/cow.jpeg', import.meta.url)
         profileImage.src = imageLink.toString();
         profileImageX2.src = imageLink.toString();
@@ -63,32 +62,25 @@ async function fillUserDropdown(): Promise<void> {
 }
 
 // Funktion för att navigera till användarens profil
-function navigateToUserProfile(userId: string): void {
+function navigateToUserProfile(selectedUserId: string): void {
     // Konstruera URL:en till användarens profil baserat på userId 
-    const userProfileUrl = `./visitprofile.html`;
+    const userProfileUrl = `./visitprofile.html?userId=` + selectedUserId;
     // Navigera till den angivna URL:en
     window.location.href = userProfileUrl;
 }
-
 // Lägg till händelselyssnare för att navigera till användarens profil vid val i dropdown-listan
 const userDropdown = document.getElementById("userDropdown");
 if (userDropdown) {
     userDropdown.addEventListener("change", (event) => {
-        const selectedUserId = (event.target as HTMLSelectElement).value;
+        let selectedUserId = (event.target as HTMLSelectElement).value;
         if (selectedUserId) {
             navigateToUserProfile(selectedUserId);
+            localStorage.setItem('selectedUserId', selectedUserId)
         }
     });
-}
+};
 
-// Anropa funktionen för att fylla dropdown-listan när sidan laddas
 fillUserDropdown();
-
-// Definiera typen för en kommentar
-type Comment = {
-    commentContent: string;
-    userId: string;
-}
 
 async function displayPostsInProfile(userId: string, forum: string) {
     const posts = await getpostsFromUsers(forum);
@@ -116,7 +108,4 @@ async function createCommentsInProfile(postId: any, postContent: string) {
 
     const latestPosts = createAndAppend(eachCommentCard, 'p', postContent)
     localStorage.setItem('postId', postId)
-}
-
-
-export { Comment };
+};
